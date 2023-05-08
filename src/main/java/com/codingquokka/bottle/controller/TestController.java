@@ -1,4 +1,4 @@
-package sending.sendingspring;
+package com.codingquokka.bottle.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;

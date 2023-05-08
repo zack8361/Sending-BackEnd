@@ -1,4 +1,4 @@
-package sending.sendingspring;
+package com.codingquokka.bottle;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,10 +8,10 @@ import org.springframework.context.annotation.ImportResource;
 @SpringBootApplication
 @Configuration
 @ImportResource("classpath:databaseContext.xml")
-public class SendingSpringApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SendingSpringApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 
