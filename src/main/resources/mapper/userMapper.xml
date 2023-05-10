@@ -11,4 +11,16 @@
 		select *
 		from user
 	</select>
+
+	<select id="loginTest" resultType="map">
+		select *
+		from user
+		where user_id = 'user1@naver.com'
+	</select>
+
+	<insert id="insertTest">
+		INSERT INTO user(`USER_ID`, `USER_PW`, `IS_CERTIFIED`, `CNT_RECEIVED`, `JOIN_DT`, `RESTRICTION_DT`, `BELONG`, `IS_USING`)
+		VALUES ('test@test.com', 'password2', 'N', '0', '0', '0', '0', '0')
+	</insert>
+
 </mapper>

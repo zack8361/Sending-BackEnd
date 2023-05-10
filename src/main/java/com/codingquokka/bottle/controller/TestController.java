@@ -1,25 +1,29 @@
 package com.codingquokka.bottle.controller;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.codingquokka.bottle.dao.UserDao;
+import com.codingquokka.bottle.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 @RestController
 public class TestController {
     @Autowired
     ObjectMapper om;
+
+    @Autowired
+    UserDao userDao;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/test")
     public ArrayList<String> testHandler() {
@@ -28,6 +32,7 @@ public class TestController {
         list.add("이찬호");
         list.add("콩희찡꼴라");
         list.add("이하나");
+
         return list;
     }
     @GetMapping("/list")
@@ -82,5 +87,17 @@ public class TestController {
         map.put("code",403);
         map.put("msg","please try later");
         return ResponseEntity.status(403).body(map);
+    }
+
+    @GetMapping("/dbTest")
+    public ResponseEntity<Map<String, Object>> dbTest() {
+        Map<String, Object> map = userDao.login();
+        return ResponseEntity.ok(map);
+    }
+
+    @GetMapping("/transactionTest")
+    public ResponseEntity transactionTest() {
+        userService.insertTest();
+        return ResponseEntity.ok().build();
     }
 }
