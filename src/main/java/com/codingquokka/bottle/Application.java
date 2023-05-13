@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
 @Configuration
-@ImportResource("classpath:databaseContext.xml")
+@ImportResource({"classpath:databaseContext.xml", "classpath:mailContext.xml"})
 public class Application {
 
 	public static void main(String[] args) {
