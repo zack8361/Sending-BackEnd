@@ -29,12 +29,12 @@ public class UserController {
 
         System.out.println(map);
         System.out.println(map.get("email"));
-       // Map<String, Object> res = userService.login(body);
+        Map<String, Object> res = userService.login(map);
 
-//        if(res != null){
-//            session.setAttribute("login",res);
-//            return ResponseEntity.ok().build();
-//        }
+        if(res != null){
+            session.setAttribute("login",res);
+            return ResponseEntity.ok().build();
+        }
 
         return ResponseEntity.status(200).build();
     }

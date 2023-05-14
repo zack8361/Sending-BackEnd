@@ -2,6 +2,7 @@ package com.codingquokka.bottle.controller;
 
 
 import com.codingquokka.bottle.dao.UserDao;
+import com.codingquokka.bottle.service.MailService;
 import com.codingquokka.bottle.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class TestController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    MailService mailService;
 
     @GetMapping("/test")
     public ArrayList<String> testHandler() {
@@ -89,15 +93,21 @@ public class TestController {
         return ResponseEntity.status(403).body(map);
     }
 
-    @GetMapping("/dbTest")
-    public ResponseEntity<Map<String, Object>> dbTest() {
-        Map<String, Object> map = userDao.login();
-        return ResponseEntity.ok(map);
-    }
+//    @GetMapping("/dbTest")
+//    public ResponseEntity<Map<String, Object>> dbTest() {
+//        Map<String, Object> map = userDao.login();
+//        return ResponseEntity.ok().build();
+//    }
 
     @GetMapping("/transactionTest")
     public ResponseEntity transactionTest() {
         userService.insertTest();
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/mailTest")
+    public ResponseEntity mailTest() throws Exception {
+        mailService.sendMail("dotheji11@gmail.com", "test", "test Text");
         return ResponseEntity.ok().build();
     }
 }

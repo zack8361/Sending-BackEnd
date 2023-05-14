@@ -14,8 +14,8 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
-    public Map<String, Object> login(UserVO userVo){
-        return userDao.login();
+    public Map<String, Object> login(Map<String, Object> map){
+        return userDao.login(map);
     }
     public void insertTest() {
         userDao.insertTest();

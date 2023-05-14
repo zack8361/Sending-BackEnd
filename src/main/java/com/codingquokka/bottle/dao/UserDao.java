@@ -18,8 +18,8 @@ public class UserDao {
 
     private static String namepace = "mapper.userMapper";
 
-    public Map<String, Object> login() {
-        return sqlSession.selectOne(namepace+".loginTest");
+    public Map<String, Object> login(Map<String, Object> map) {
+        return sqlSession.selectOne(namepace+".loginTest", map);
     }
 
     public void insertTest() {
