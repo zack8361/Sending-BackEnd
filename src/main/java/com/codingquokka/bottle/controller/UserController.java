@@ -3,7 +3,7 @@ package com.codingquokka.bottle.controller;
 
 import com.codingquokka.bottle.dao.UserDao;
 import com.codingquokka.bottle.service.UserService;
-import com.codingquokka.bottle.vo.UserVO;
+import com.codingquokka.bottle.core.AES128;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +30,7 @@ public class UserController {
         System.out.println(map);
         System.out.println(map.get("email"));
         Map<String, Object> res = userService.login(map);
+        System.out.println("복호화 : "+AES128.decrypt(map.get("email").toString()));
 
         if(res != null){
             session.setAttribute("login",res);
