@@ -4,6 +4,7 @@ package com.codingquokka.bottle.controller;
 import com.codingquokka.bottle.dao.UserDao;
 import com.codingquokka.bottle.service.UserService;
 import com.codingquokka.bottle.core.AES128;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,20 +23,35 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(HttpSession session, @RequestBody HashMap<String,Object> map) throws Exception{
+    public ResponseEntity<Object> login(HttpSession session, @RequestBody HashMap<String, Object> map) throws Exception {
         AES128 aes128 = new AES128("0123456789abcdef");
-        System.out.println(map);
-        System.out.println(map.get("email"));
-        Map<String, Object> res = userService.login(map);
-        System.out.println("복호화 : "+aes128.decrypt((String) map.get("email")));
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("email", aes128.decrypt((String) map.get("email")));
+        param.put("password", map.get("password"));
+        Map<String, Object> res = userService.login(param);
 
-        if(res != null){
-            session.setAttribute("login",res);
-            return ResponseEntity.ok().build();
+        Map<String, String> responseData = new HashMap<String, String>();
+        if (res != null) {
+            session.setAttribute("userData", res);
+
+            responseData.put("status", "200");
+            responseData.put("message", "success");
+        } else {
+            responseData.put("status", "500");
+            responseData.put("message", "fail");
         }
 
-        return ResponseEntity.status(200).build();
+        String loginResult = objectMapper.writeValueAsString(responseData); // Map을 JSON 형식으로 바꿔준다 !!
+        return ResponseEntity.ok(loginResult);
     }
+
+    @PostMapping("/join")
+    public ResponseEntity<Object> join(HttpSession session, @RequestBody HashMap<String, Object> map) throws Exception {
+
+    }
+
 }

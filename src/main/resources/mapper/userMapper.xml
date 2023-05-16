@@ -7,8 +7,8 @@
 
 <mapper namespace="mapper.userMapper">
 	<!-- 로그인  -->
-	<select id="login" resultType="com.codingquokka.bottle.vo.UserVO">
-		SELECT * FROM user WHERE USER_ID =#{userId} AND USER_PW=#{userPw}
+	<select id="login" parameterType="map" resultType="map">
+		SELECT * FROM user WHERE USER_ID = #{email} AND USER_PW=#{password}
 	</select>
 
 	<select id="loginTest" resultType="map">
@@ -17,9 +17,9 @@
 		where user_id = 'user1@naver.com'
 	</select>
 
-	<insert id="insertTest">
+	<insert id="join" parameterType="map">
 		INSERT INTO user(`USER_ID`, `USER_PW`, `IS_CERTIFIED`, `CNT_RECEIVED`, `JOIN_DT`, `RESTRICTION_DT`, `BELONG`, `IS_USING`)
-		VALUES ('test@test.com', 'password2', 'N', '0', '0', '0', '0', '0')
+		VALUES (#{email}, #{password}, 'N', '0',DATE_FORMAT(NOW(),'%Y-%m-%d'), NULL, '0', 'Y')
 	</insert>
 
 </mapper>
