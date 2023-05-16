@@ -1,7 +1,6 @@
 package com.codingquokka.bottle.service;
 
 import com.codingquokka.bottle.dao.UserDao;
-import com.codingquokka.bottle.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

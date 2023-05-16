@@ -1,6 +1,8 @@
 package com.codingquokka.bottle.controller;
 
 
+import com.codingquokka.bottle.core.AES128;
+import com.codingquokka.bottle.core.MessageUtils;
 import com.codingquokka.bottle.dao.UserDao;
 import com.codingquokka.bottle.service.MailService;
 import com.codingquokka.bottle.service.UserService;
@@ -18,17 +20,19 @@ import java.util.Map;
 @RestController
 public class TestController {
     @Autowired
-    ObjectMapper om;
+    private ObjectMapper om;
 
     @Autowired
-    UserDao userDao;
+    private UserDao userDao;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    MailService mailService;
+    private MailService mailService;
 
+    @Autowired
+    private AES128 aes128;
     @GetMapping("/test")
     public ArrayList<String> testHandler() {
         ArrayList<String> list = new ArrayList<>();
@@ -108,6 +112,12 @@ public class TestController {
     @GetMapping("/mailTest")
     public ResponseEntity mailTest() throws Exception {
         mailService.sendMail("imsiro2323@gmail.com", "test", "test Text");
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/propertyTest")
+    public ResponseEntity propertyTest() throws Exception {
+        System.out.println(MessageUtils.getMessage("aes.key"));
         return ResponseEntity.ok().build();
     }
 }

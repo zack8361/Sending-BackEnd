@@ -1,9 +1,7 @@
 package com.codingquokka.bottle.dao;
 
-import com.codingquokka.bottle.vo.UserVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

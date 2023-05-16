@@ -26,9 +26,11 @@ public class UserController {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private AES128 aes128;
+
     @PostMapping("/login")
     public ResponseEntity<Object> login(HttpSession session, @RequestBody HashMap<String, Object> map) throws Exception {
-        AES128 aes128 = new AES128("0123456789abcdef");
         HashMap<String, Object> param = new HashMap<>();
         param.put("email", aes128.decrypt((String) map.get("email")));
         param.put("password", map.get("password"));
@@ -51,7 +53,7 @@ public class UserController {
 
     @PostMapping("/join")
     public ResponseEntity<Object> join(HttpSession session, @RequestBody HashMap<String, Object> map) throws Exception {
-
+        return null;
     }
 
 }

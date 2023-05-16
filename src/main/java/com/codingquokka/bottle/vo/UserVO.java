@@ -14,5 +14,6 @@ public class UserVO {
     private String joinDt;
     private String restrictionDt;
     private String belong;
+    private String uuid;
     private int isUsing;
 }
