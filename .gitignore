@@ -33,3 +33,4 @@ build/
 .vscode/
 src/main/resources/databaseContext.xml
 src/main/resources/mailContext.xml
+src/main/resources/secret.properties
