@@ -18,8 +18,8 @@
 	</select>
 
 	<insert id="join" parameterType="map">
-		INSERT INTO user(`USER_ID`, `USER_PW`, `IS_CERTIFIED`, `CNT_RECEIVED`, `JOIN_DT`, `RESTRICTION_DT`, `BELONG`, `IS_USING`)
-		VALUES (#{email}, #{password}, 'N', '0',DATE_FORMAT(NOW(),'%Y-%m-%d'), NULL, '0', 'Y')
+		INSERT INTO user(`USER_ID`, `USER_PW`, `IS_CERTIFIED`, `CNT_RECEIVED`, `JOIN_DT`, `RESTRICTION_DT`, `BELONG`, `UUID`, `IS_USING`)
+		VALUES (#{email}, #{password}, 'N', '0',DATE_FORMAT(NOW(),'%Y-%m-%d'), NULL, '0', #{uuid}, 'Y')
 	</insert>
 
 </mapper>
