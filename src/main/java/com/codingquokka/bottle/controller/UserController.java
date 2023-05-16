@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -26,11 +25,11 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(HttpSession session, @RequestBody HashMap<String,Object> map) throws Exception{
-
+        AES128 aes128 = new AES128("0123456789abcdef");
         System.out.println(map);
         System.out.println(map.get("email"));
         Map<String, Object> res = userService.login(map);
-        System.out.println("복호화 : "+AES128.decrypt(map.get("email").toString()));
+        System.out.println("복호화 : "+aes128.decrypt((String) map.get("email")));
 
         if(res != null){
             session.setAttribute("login",res);

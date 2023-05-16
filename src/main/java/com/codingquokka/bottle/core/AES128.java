@@ -20,8 +20,8 @@ public class AES128 {
 //    static private String ips;
 //    static private Key keySpec;
 
-    private static final String SECRET_KEY = "abcdefghijklmnop";
-    private static final String IV = "ShVmYq3t6w9y$B&E";
+    private static final String SECRET_KEY = "0123456789abcdef";
+    private static final String IV = "0123456789abcdef";
 
     private String ips;
     private Key keySpec;
@@ -40,7 +40,7 @@ public class AES128 {
         }
     }
 
-    public static String decrypt(String str) throws NoSuchPaddingException, NoSuchAlgorithmException,
+    public String decrypt(String str) throws NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidAlgorithmParameterException, InvalidKeyException,
             IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
         Cipher cipher = Cipher.getInstance(TRANSFORMATION);
