@@ -25,6 +25,6 @@ public class UserDao {
     }
 
     public int cert(String uuid) {
-        sqlSession.update(namepace+".cert", uuid);
+        return sqlSession.update(namepace+".cert", uuid);
     }
 }
