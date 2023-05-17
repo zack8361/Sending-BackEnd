@@ -22,35 +22,16 @@ import java.util.Locale;
 
 @Component
 public class AES128 {
-
-    private String secretKey;
-    private String iv;
-
-    private String ips;
-    private Key keySpec;
     private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
-
-    public AES128() {
-        this.secretKey = MessageUtils.getMessage("aes.key");
-        this.iv = MessageUtils.getMessage("aes.iv");
-        try {
-            byte[] keyBytes = new byte[16];
-            byte[] b = secretKey.getBytes("UTF-8");
-            System.arraycopy(b, 0, keyBytes, 0, keyBytes.length);
-            SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
-            this.ips = secretKey.substring(0, 16);
-            this.keySpec = keySpec;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public String decrypt(String str) throws NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidAlgorithmParameterException, InvalidKeyException,
             IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
+;
+
         Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), "AES");
-        IvParameterSpec ivParameterSpec = new IvParameterSpec(iv.getBytes(StandardCharsets.UTF_8));
+        SecretKeySpec secretKeySpec = new SecretKeySpec(MessageUtils.getMessage("aes.key").getBytes(), "AES");
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(MessageUtils.getMessage("aes.iv").getBytes(StandardCharsets.UTF_8));
 
         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
 

@@ -118,6 +118,7 @@ public class TestController {
     @GetMapping("/propertyTest")
     public ResponseEntity propertyTest() throws Exception {
         System.out.println(MessageUtils.getMessage("aes.key"));
+        System.out.println(MessageUtils.getMessage("aes.iv"));
         return ResponseEntity.ok().build();
     }
 }
