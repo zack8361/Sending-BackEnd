@@ -21,4 +21,7 @@ public class UserService {
         throw new RuntimeException();
     }
 
+    public int cert(String uuid) {
+        return userDao.cert(uuid);
+    }
 }

@@ -1,10 +1,6 @@
 package com.codingquokka.bottle.core;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -36,5 +32,20 @@ public class AES128 {
         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
 
         return new String(cipher.doFinal(Base64.getDecoder().decode(str)), "UTF-8");
+    }
+
+    public String encrypt(String str) throws NoSuchPaddingException, NoSuchAlgorithmException,
+            InvalidAlgorithmParameterException, InvalidKeyException,
+            IllegalBlockSizeException, BadPaddingException {
+
+        SecretKeySpec secretKeySpec = new SecretKeySpec(MessageUtils.getMessage("aes.key").getBytes(), "AES");
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(MessageUtils.getMessage("aes.iv").getBytes(StandardCharsets.UTF_8));
+
+        Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
+
+        byte[] encryptedBytes = cipher.doFinal(str.getBytes(StandardCharsets.UTF_8));
+
+        return Base64.getEncoder().encodeToString(encryptedBytes);
     }
 }

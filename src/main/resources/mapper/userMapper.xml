@@ -22,4 +22,10 @@
 		VALUES (#{email}, #{password}, 'N', '0',DATE_FORMAT(NOW(),'%Y-%m-%d'), NULL, '0', #{uuid}, 'Y')
 	</insert>
 
+	<update id="cert" parameterType="String">
+		UPDATE user
+		SET IS_CERTIFIED = 'Y'
+		WHERE UUID = #{uuid}
+	</update>
+
 </mapper>

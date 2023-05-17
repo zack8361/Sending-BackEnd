@@ -23,4 +23,8 @@ public class UserDao {
     public void insertTest() {
         sqlSession.insert(namepace+".insertTest");
     }
+
+    public int cert(String uuid) {
+        sqlSession.update(namepace+".cert", uuid);
+    }
 }

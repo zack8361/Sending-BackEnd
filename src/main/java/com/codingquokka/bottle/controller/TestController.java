@@ -121,4 +121,16 @@ public class TestController {
         System.out.println(MessageUtils.getMessage("aes.iv"));
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/aesTest")
+    public ResponseEntity aesTest() throws Exception {
+        String str = "I love you";
+
+        String enStr = aes128.encrypt(str);
+        System.out.println(enStr);
+        String deStr = aes128.decrypt(enStr);
+        System.out.println(deStr);
+        return ResponseEntity.ok().build();
+    }
+
 }

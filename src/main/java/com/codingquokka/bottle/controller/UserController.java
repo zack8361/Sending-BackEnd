@@ -7,9 +7,7 @@ import com.codingquokka.bottle.core.AES128;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -53,7 +51,25 @@ public class UserController {
 
     @PostMapping("/join")
     public ResponseEntity<Object> join(HttpSession session, @RequestBody HashMap<String, Object> map) throws Exception {
+
+
+
+
+
         return null;
     }
+
+    @GetMapping("/certUser/{encyptedUuid}")
+    public ResponseEntity<Object> cert(@PathVariable("encyptedUuid") String encyptedUuid) throws Exception {
+
+        if (userService.cert(aes128.decrypt(encyptedUuid)) == 1) {
+            //인증 완료 페이지
+            return null;
+        }
+        //인증 실패 페이지
+        return null;
+    }
+
+
 
 }
