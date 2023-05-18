@@ -13,7 +13,7 @@
 
 	<select id="loginTest" resultType="map">
 		select *
-		from user
+		from user1
 		where user_id = 'user1@naver.com'
 	</select>
 

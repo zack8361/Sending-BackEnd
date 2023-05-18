@@ -1,5 +1,6 @@
 package com.codingquokka.bottle.dao;
 
+import com.codingquokka.bottle.vo.UserVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,6 +21,7 @@ public class UserDao {
         return sqlSession.selectOne(namepace+".login", map);
     }
 
+    public void join() {sqlSession.insert(namepace+".join"); }
     public void insertTest() {
         sqlSession.insert(namepace+".insertTest");
     }

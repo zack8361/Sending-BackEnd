@@ -4,6 +4,7 @@ package com.codingquokka.bottle.controller;
 import com.codingquokka.bottle.dao.UserDao;
 import com.codingquokka.bottle.service.UserService;
 import com.codingquokka.bottle.core.AES128;
+import com.codingquokka.bottle.vo.UserVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,8 @@ import java.util.Map;
 @RestController
 public class UserController {
 
+
+    @Autowired
     private UserDao udao;
 
     @Autowired
@@ -45,15 +48,22 @@ public class UserController {
             responseData.put("status", "500");
             responseData.put("message", "fail");
         }
+        System.out.println(param.get("email").toString());
 
         String loginResult = objectMapper.writeValueAsString(responseData); // Map을 JSON 형식으로 바꿔준다 !!
         return ResponseEntity.ok(loginResult);
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Object> join(HttpSession session, @RequestBody HashMap<String, Object> map) throws Exception {
+    public void join(HttpSession session, UserVO uservo) throws Exception {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("userId", uservo.getUserId());
+        System.out.println(param.get("userId"));
+        Map<String, Object> res = userService.login(param);
 
-        return null;
+
+        udao.join();
+
     }
 
     @GetMapping("/certUser/{encyptedUuid}")

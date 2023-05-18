@@ -1,6 +1,7 @@
 package com.codingquokka.bottle.service;
 
 import com.codingquokka.bottle.dao.UserDao;
+import com.codingquokka.bottle.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,10 +17,15 @@ public class UserService {
     public Map<String, Object> login(Map<String, Object> map){
         return userDao.login(map);
     }
+
+    public void join(UserVO uservo) { userDao.join(); }
+
     public void insertTest() {
         userDao.insertTest();
         throw new RuntimeException();
     }
+
+
 
     public int cert(String uuid) {
         return userDao.cert(uuid);
