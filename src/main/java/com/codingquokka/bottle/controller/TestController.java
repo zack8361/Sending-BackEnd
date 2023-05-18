@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@RestController("/test")
 public class TestController {
     @Autowired
     private ObjectMapper om;

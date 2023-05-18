@@ -18,10 +18,6 @@ import java.util.Map;
 @RestController
 public class UserController {
 
-
-    @Autowired
-    private UserDao udao;
-
     @Autowired
     private UserService userService;
 
@@ -59,10 +55,8 @@ public class UserController {
         HashMap<String, Object> param = new HashMap<>();
         param.put("userId", uservo.getUserId());
         System.out.println(param.get("userId"));
-        Map<String, Object> res = userService.login(param);
 
-
-        udao.join();
+        userService.join();
 
     }
 
