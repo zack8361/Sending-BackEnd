@@ -8,6 +8,7 @@ import com.codingquokka.bottle.vo.UserVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@RestController
+@Controller
 public class UserController {
 
     @Autowired
@@ -89,16 +90,16 @@ public class UserController {
     @GetMapping("/certUser/{encyptedUuid}")
     public ModelAndView cert(@PathVariable("encyptedUuid") String encyptedUuid) throws Exception {
 
-        System.out.println(encyptedUuid);
+        ModelAndView mv = new ModelAndView();
 
-//        if (userService.cert(aes128.decrypt(encyptedUuid)) == 1) {
-//            //인증 완료 페이지
-//            return "/certSuccess";
-//        }
+        if (userService.cert(aes128.decrypt(encyptedUuid)) == 1) {
+            mv.setViewName("/cert/cert_Success");
+        }
+        else {
+            mv.setViewName("/cert/cert_Fail");
 
-
-        //인증 실패 페이지
-        return new ModelAndView("/certFail");
+        }
+        return mv;
     }
 
 
