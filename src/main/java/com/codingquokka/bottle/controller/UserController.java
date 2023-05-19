@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 public class UserController {
@@ -29,10 +30,8 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(HttpSession session, @RequestBody HashMap<String, Object> map) throws Exception {
-        HashMap<String, Object> param = new HashMap<>();
-        param.put("email", aes128.decrypt((String) map.get("email")));
-        param.put("password", map.get("password"));
-        Map<String, Object> res = userService.login(param);
+        map.put("email", aes128.decrypt((String) map.get("email")));
+        Map<String, Object> res = userService.login(map);
 
         Map<String, String> responseData = new HashMap<String, String>();
         if (res != null) {
@@ -43,21 +42,48 @@ public class UserController {
         } else {
             responseData.put("status", "500");
             responseData.put("message", "fail");
-        }
-        System.out.println(param.get("email").toString());
 
+        }
         String loginResult = objectMapper.writeValueAsString(responseData); // Map을 JSON 형식으로 바꿔준다 !!
         return ResponseEntity.ok(loginResult);
     }
 
     @PostMapping("/join")
-    public void join(HttpSession session, UserVO uservo) throws Exception {
-        HashMap<String, Object> param = new HashMap<>();
-        param.put("userId", uservo.getUserId());
-        System.out.println(param.get("userId"));
+    public ResponseEntity<Object> join(@RequestBody HashMap<String, Object> map) throws Exception  {
+        map.put("email",aes128.decrypt(map.get("email").toString()));
+        map.put("uuid",UUID.randomUUID().toString());
 
-        userService.join();
+        Map<String, String> responseData = new HashMap<String, String>();
+        try{
+            if (userService.join(map) == 1) {
+                responseData.put("status", "200");
+                responseData.put("message", "success");
+            }
+        } catch(Exception e) {
+            responseData.put("status", "500");
+            responseData.put("message", "fail");
 
+        }
+        String joinResult = objectMapper.writeValueAsString(responseData); // Map을 JSON 형식으로 바꿔준다 !!
+        return ResponseEntity.ok(joinResult);
+    }
+
+    @PostMapping("/checkEmail")
+    public ResponseEntity<Object> checkEmail(@RequestBody HashMap<String, Object> map) throws Exception {
+        map.put("email", aes128.decrypt((String) map.get("email")));
+
+        int res = userService.checkEmail(map);
+
+        Map<String, String> responseData = new HashMap<String, String>();
+        if(res == 1){
+            responseData.put("status", "500");
+            responseData.put("message", "fail");
+        } else {
+            responseData.put("status", "200");
+            responseData.put("message", "success");
+        }
+        String checkEmailResult = objectMapper.writeValueAsString(responseData); // Map을 JSON 형식으로 바꿔준다 !!
+        return ResponseEntity.ok(checkEmailResult);
     }
 
     @GetMapping("/certUser/{encyptedUuid}")

@@ -18,7 +18,8 @@ public class UserService {
         return userDao.login(map);
     }
 
-    public void join(UserVO uservo) { userDao.join(); }
+    public int join(Map<String, Object> map) { return userDao.join(map); }
+    public int checkEmail(Map<String, Object> map) { return userDao.checkEmail(map); }
 
     public void insertTest() {
         userDao.insertTest();

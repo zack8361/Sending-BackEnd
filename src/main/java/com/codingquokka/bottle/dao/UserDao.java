@@ -20,12 +20,11 @@ public class UserDao {
     public Map<String, Object> login(Map<String, Object> map) {
         return sqlSession.selectOne(namepace+".login", map);
     }
-
-    public void join() {sqlSession.insert(namepace+".join"); }
+    public int join(Map<String, Object> map) {return sqlSession.insert(namepace+".join", map); }
     public void insertTest() {
         sqlSession.insert(namepace+".insertTest");
     }
-
+    public int checkEmail(Map<String,Object> map) {return sqlSession.selectOne(namepace+".checkEmail",map);}
     public int cert(String uuid) {
         return sqlSession.update(namepace+".cert", uuid);
     }
