@@ -112,7 +112,7 @@ public class TestController {
 
     @GetMapping("/mailTest")
     public ResponseEntity mailTest() throws Exception {
-        mailService.sendMail("imsiro2323@gmail.com", "test", "test Text");
+        mailService.sendMail("dotheji11@naver.com", "test", "test Text");
         return ResponseEntity.ok().build();
     }
 

@@ -1,7 +1,9 @@
 package com.codingquokka.bottle.controller;
 
 
+import com.codingquokka.bottle.core.MessageUtils;
 import com.codingquokka.bottle.dao.UserDao;
+import com.codingquokka.bottle.service.MailService;
 import com.codingquokka.bottle.service.UserService;
 import com.codingquokka.bottle.core.AES128;
 import com.codingquokka.bottle.vo.UserVO;
@@ -22,6 +24,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MailService mailService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -59,6 +64,9 @@ public class UserController {
             if (userService.join(map) == 1) {
                 responseData.put("status", "200");
                 responseData.put("message", "success");
+
+                String emailContent = MessageUtils.getMessage("send.cert.email").replace("${link}",MessageUtils.getMessage("server.ip")+"/certUser/"+ aes128.encrypt(map.get("uuid").toString()));
+                mailService.sendMail(map.get("email").toString(), "[Bottle] 인증을 완료해주세요", emailContent);
             }
         } catch(Exception e) {
             responseData.put("status", "500");
