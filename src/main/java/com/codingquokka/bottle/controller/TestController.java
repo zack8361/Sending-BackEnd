@@ -112,9 +112,88 @@ public class TestController {
 
     @GetMapping("/mailTest")
     public ResponseEntity mailTest() throws Exception {
-        mailService.sendMail("dotheji11@naver.com", "test", "test Text");
         String emailContent = MessageUtils.getMessage("send.cert.email").replace("${link}",MessageUtils.getMessage("server.ip")+"/certUser/"+ "UuidExample");
-        mailService.sendMail("dotheji11@naver.com", "[Bottle] 인증을 완료해주세요", emailContent);
+        mailService.sendMail("jjss77777@naver.com", "[Bottle] 인증을 완료해주세요", "<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <title>Title</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<div class=\"emailauth_content\">\n" +
+                "  <div class=\"top\">\n" +
+                "    <div class=\"topbox1\"></div>\n" +
+                "    <div class=\"topbox2\"></div>\n" +
+                "    <div class=\"topbox3\"></div>\n" +
+                "    <div class=\"sicon_box1\"> </div>\n" +
+                "    <div class=\"sicon_box2\"> </div>\n" +
+                "    <div class=\"sicon_box3\"> </div>\n" +
+                "    <div class=\"sicon_bar1\"> </div>\n" +
+                "    <div class=\"sicon_bar2\"> </div>\n" +
+                "    <div class=\"home_box1\"> </div>\n" +
+                "    <div class=\"home_box2\"> </div>\n" +
+                "    <div class=\"home_box3\"> </div>\n" +
+                "    <div class=\"home_bar1\"> </div>\n" +
+                "    <div class=\"home_bar2\"> </div>\n" +
+                "    <div class=\"ficon_box1\"> </div>\n" +
+                "    <div class=\"ficon_box2\"> </div>\n" +
+                "    <div class=\"ficon_box3\"> </div>\n" +
+                "    <div class=\"ficon_bar1\"> </div>\n" +
+                "    <div class=\"ficon_bar2\"> </div>\n" +
+                "\n" +
+                "    <div class=\"title\" style = 'color: #020202;\n" +
+                "         font-size: 230%;\n" +
+                "         font-family: \"DungGeunMo\", sans-serif;\n" +
+                "    font-weight: bold;\n" +
+                "    position: absolute;\n" +
+                "    left: 40%;\n" +
+                "    top: 53%;\n" +
+                "    z-index: 19;'>이메인증페이지</div>\n" +
+                "    <div class=\"topline1\"> </div>\n" +
+                "    <div class=\"topline2\"> </div>\n" +
+                "  </div>\n" +
+                "\n" +
+                "  <div class=\"left_container\">\n" +
+                "    <div class=\"logo\">\n" +
+                "\n" +
+                "      {\"　　　☆彡　｡∴｡　　　　･｡∴｡｡　☆彡 ｡　　｡∴｡｡☆　　☆彡　　　　\" }\n" +
+                "      <br />\n" +
+                "      {\"　　　　☆｡∴　　　｡｡　☆　　　･｡∴｡｡　☆　　　　*｡∴｡｡★　　\" }\n" +
+                "      <br />\n" +
+                "      {\"　　　*｡★　　　　∧__∧　☆｡　　･ﾟ　　　　　　☆｡∴　　　　\" }\n" +
+                "      <br />\n" +
+                "      {\"　★　　　｡∴　｡*( ｀Д´ )｡　　ﾟ　*당장 ｡　　　 ｡\" }\n" +
+                "      <br />\n" +
+                "      {\"　　　　☆　　｡｡(っ▄︻▇〓┳═ ･*　★　　이메일 ☆･ ｡\" }\n" +
+                "      <br />\n" +
+                "      {\"　　　･ﾟ*｡★　　/ ) ｡･　　･ﾟ｡　･ 　　 　　☆인증해 ☆･ ｡　　　　\" }\n" +
+                "      {\"･ ｡･　　　　　( /￣∪｡*･ﾟ　*｡★　｡･*　　｡｡∴｡　　　　　　\" }\n" +
+                "      <br />\n" +
+                "      {\"　　　｡∴｡　☆　　｡　　　　　･｡∴｡｡　☆　　　　　ﾟ｡　☆彡｡･*･\"}\n" +
+                "      <br />\n" +
+                "      {\"　　　｡∴｡　　　　･｡∴｡｡　☆　　　 ｡　　　　☆｡∴｡☆　　☆彡　　*･ﾟ\" }\n" +
+                "    </div>\n" +
+                "\n" +
+                "  </div>\n" +
+                "  <div class=\"right_container\">\n" +
+                "    <div class=\"text_box1\"></div>\n" +
+                "    <div class=\"text_box2\"></div>\n" +
+                "    <div class=\"text_box3\"></div>\n" +
+                "    <div class=\"text_line1\"></div>\n" +
+                "    <div class=\"text_line2\"></div>\n" +
+                "    <div class=\"text_email\">링크를 눌러 인증을 완료해주세요</div>\n" +
+                "    <button class=\"url_btn\">\n" +
+                "      {\"|　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　|\"}\n" +
+                "      <br />\n" +
+                "      {\"|　　　   https://www.hansung.ac.kr/sites/hansung/index.do 　　　　　|\"}\n" +
+                "      <br />\n" +
+                "      {\"|　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　|\"}\n" +
+                "    </button>\n" +
+                "  </div>\n" +
+                "</div>\n" +
+                "</body>\n" +
+                "</html>");
+
 
 
 
@@ -142,7 +221,7 @@ public class TestController {
     @GetMapping("/webTest")
     public ModelAndView webTest() throws Exception {
 
-        return new ModelAndView("/cert/cert_Fail");
+        return new ModelAndView("/cert/cert_Mail");
     }
 
 }
