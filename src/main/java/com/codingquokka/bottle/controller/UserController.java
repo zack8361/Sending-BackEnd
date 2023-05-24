@@ -58,6 +58,8 @@ public class UserController {
     public ResponseEntity<Object> join(@RequestBody HashMap<String, Object> map) throws Exception  {
         map.put("email",aes128.decrypt(map.get("email").toString()));
         map.put("uuid",UUID.randomUUID().toString());
+        String emailContent = null;
+
 
         Map<String, String> responseData = new HashMap<String, String>();
         try{
@@ -65,14 +67,19 @@ public class UserController {
                 responseData.put("status", "200");
                 responseData.put("message", "success");
 
-                String emailContent = MessageUtils.getMessage("send.cert.email").replace("${link}",MessageUtils.getMessage("server.ip")+"/certUser/"+ aes128.encrypt(map.get("uuid").toString()));
-                mailService.sendMail(map.get("email").toString(), "[Bottle] 인증을 완료해주세요", emailContent);
+                emailContent = MessageUtils.getMessage("send.cert.email").replace("${link}",MessageUtils.getMessage("server.ip")+"/certUser/"+ aes128.encrypt(map.get("uuid").toString()));
+            }
+            else {
+               throw new Exception();  //insert안박힌 경우 catch로 이동
             }
         } catch(Exception e) {
             responseData.put("status", "500");
             responseData.put("message", "fail");
-
         }
+        //디비에 제대로 박혀도 메일에서 실패하면 디비도 롤백되어야 한다.
+        mailService.sendMail(map.get("email").toString(), "[Bottle] 인증을 완료해주세요", emailContent);
+
+
         String joinResult = objectMapper.writeValueAsString(responseData); // Map을 JSON 형식으로 바꿔준다 !!
         return ResponseEntity.ok(joinResult);
     }
