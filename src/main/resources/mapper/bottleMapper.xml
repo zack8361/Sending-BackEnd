@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.bottleMapper">
+    <select id="getReceivedBottles" parameterType="map" resultType="map">
+        SELECT
+            LETTER_ID,
+            TITLE,
+            SEND_DT
+        FROM bottle_letter
+        WHERE RECEIVER_ID = #{email}
+          AND IS_USING = 1
+          AND IS_REPORTTED_MSG = 0;
+    </select>
+
+    <select id="getSentBottles" parameterType="map" resultType="map">
+        SELECT
+            LETTER_ID,
+            TITLE,
+            SEND_DT,
+            IS_READ
+        FROM bottle_letter
+        WHERE SENDER_ID = #{email}
+          AND IS_USING = 1
+    </select>
+
+    <insert id="sendBottleLetter" parameterType="map">
+        INSERT INTO
+            bottle_letter(
+                `CONTENT`,
+                `SENDER_ID`,
+                `RECEIVER_ID`,
+                `IS_READ`,
+                `IS_REPORTED_MSG`,
+                `SEND_DT`,
+                `IS_USING` )
+        VALUES (
+                #{content},
+                #{sender_id},
+                #{receiver_id},
+                '0',
+                '0',
+                DATE_FORMAT(NOW(),'%Y-%m-%d'),
+                1 )
+
+    </insert>
+
+    <select id="getLeastReceivedUser">
+        SELECT temp.USER_ID
+        FROM (
+            SELECT USER_ID,
+                   @rownum:=@rownum+1 as rownum
+            FROM user u
+                JOIN mail_domain as d
+            ON d.DOMAIN_CD = u.BELONG
+                AND u.user_id not #{email}
+                AND u.belong = (
+                SELECT belong
+                FROM user u1
+                WHERE u1.email = #{email}
+                )
+            ORDER BY u.CNT_RECEIVED
+            ) temp
+        where temp.rownum=1
+    </select>
+
+    <update id="reportBottleLetter" parameterType="map">
+        UPDATE bottle_letter
+        SET IS_REPORTED_MSG = 1
+        WHERE LETTER_ID = #{letter_id}
+    </update>
+
+
+</mapper>

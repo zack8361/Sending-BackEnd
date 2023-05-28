@@ -112,7 +112,7 @@ public class TestController {
 
     @GetMapping("/mailTest")
     public ResponseEntity mailTest() throws Exception {
-        String emailContent = MessageUtils.getMessage("send.cert.email").replace("${link}",MessageUtils.getMessage("server.ip")+"/certUser/"+ "UuidExample");
+        //String emailContent = MessageUtils.getMessage("send.cert.email").replace("${link}",MessageUtils.getMessage("server.ip")+"/certUser/"+ "UuidExample");
         mailService.sendMail("jjss77777@naver.com", "[Bottle] 인증을 완료해주세요", "<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
                 "<head>\n" +

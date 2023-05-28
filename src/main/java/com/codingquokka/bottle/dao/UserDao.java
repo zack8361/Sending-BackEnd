@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Map;
 
 @Repository
-@Transactional
 public class UserDao {
 
     @Autowired
