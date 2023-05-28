@@ -43,15 +43,15 @@ public class UserController {
         Map<String, String> responseData = new HashMap<String, String>();
         if (res != null) {
             if (res.get("IS_CERTIFIED").equals(1)) {
-                responseData.put("status", "200");
-                responseData.put("message", "success");
+                responseData.put("status", "success");
+                responseData.put("message", "성공");
             } else {
-                responseData.put("status", "500");
-                responseData.put("message", "not certified");
+                responseData.put("status", "fail");
+                responseData.put("message", "인증되지 않은 계정입니다.");
             }
         } else {
-            responseData.put("status", "500");
-            responseData.put("message", "fail");
+            responseData.put("status", "fail");
+            responseData.put("message", "존재하지 않는 계정정보입니다.\n이메일과 비밀번호를 확인해주세요.");
         }
         String loginResult = objectMapper.writeValueAsString(responseData); // Map을 JSON 형식으로 바꿔준다 !!
         return ResponseEntity.ok(loginResult);
@@ -70,11 +70,11 @@ public class UserController {
         map.put("domain_cd", email[1]);
         int result =  userService.join(map);
         if (result == 1) {
-            responseData.put("status", "200");
-            responseData.put("message", "success");
+            responseData.put("status", "success");
+            responseData.put("message", "성공");
         } else if (result == -1) {
-            responseData.put("status", "500");
-            responseData.put("message", "inValid Domain");
+            responseData.put("status", "fail");
+            responseData.put("message", "가입할 수 없는 메일 도메인입니다.");
         }
 
         String joinResult = objectMapper.writeValueAsString(responseData); // Map을 JSON 형식으로 바꿔준다 !!
@@ -89,11 +89,11 @@ public class UserController {
 
         Map<String, String> responseData = new HashMap<String, String>();
         if(res == 1){
-            responseData.put("status", "500");
-            responseData.put("message", "fail");
+            responseData.put("status", "fail");
+            responseData.put("message", "이미 존재하는 계정입니다.");
         } else {
-            responseData.put("status", "200");
-            responseData.put("message", "success");
+            responseData.put("status", "success");
+            responseData.put("message", "가입 가능한 계정입니다.");
         }
         String checkEmailResult = objectMapper.writeValueAsString(responseData); // Map을 JSON 형식으로 바꿔준다 !!
         return ResponseEntity.ok(checkEmailResult);
