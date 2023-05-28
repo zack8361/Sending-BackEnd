@@ -35,14 +35,12 @@ public class UserController {
     private AES128 aes128;
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(HttpSession session, @RequestBody HashMap<String, Object> map) throws Exception {
+    public ResponseEntity<Object> login(@RequestBody HashMap<String, Object> map) throws Exception {
         map.put("email", aes128.decrypt((String) map.get("email")));
         Map<String, Object> res = userService.login(map);
 
         Map<String, String> responseData = new HashMap<String, String>();
         if (res != null) {
-            session.setAttribute("userData", res);
-
             responseData.put("status", "200");
             responseData.put("message", "success");
         } else {
