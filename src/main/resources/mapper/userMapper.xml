@@ -8,13 +8,18 @@
 <mapper namespace="mapper.userMapper">
 	<!-- 로그인  -->
 	<select id="login" parameterType="map" resultType="map">
-		SELECT * FROM user WHERE USER_ID = #{email} AND USER_PW=#{password}
-	</select>
-
-	<select id="loginTest" resultType="map">
-		select *
-		from user1
-		where user_id = 'user1@naver.com'
+		SELECT
+		     USER_ID,
+		     BELONG,
+			 IS_CERTIFIED
+		FROM
+		    user
+		WHERE
+			USER_ID = #{email}
+		  AND
+		    USER_PW=#{password}
+		  AND
+		    IS_USING = 1
 	</select>
 
 	<insert id="join" parameterType="map">
@@ -36,19 +41,29 @@
 		        '0',
 		        DATE_FORMAT(NOW(),'%Y-%m-%d'),
 		        DATE_FORMAT(NOW(),'%Y-%m-%d'),
-		        '0',
+		        #{belong},
 		        #{uuid},
 		        1 )
 	</insert>
 
 	<select id="checkEmail" parameterType="map" resultType="int">
-		SELECT COUNT(*) from user where user_id = #{email}
+		SELECT
+		    COUNT(*)
+		FROM
+		    user
+		WHERE
+		    user_id = #{email}
+		  AND
+		    IS_USING = 1
 	</select>
 
 	<update id="cert" parameterType="String">
 		UPDATE user
 		SET IS_CERTIFIED = 'Y'
-		WHERE UUID = #{uuid}
+		WHERE
+		    UUID = #{uuid}
+		  AND
+		    IS_USING = 1
 	</update>
 
 </mapper>

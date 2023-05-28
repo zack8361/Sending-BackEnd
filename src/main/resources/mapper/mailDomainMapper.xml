@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.mailDomainMapper">
+    <select id="checkMailDomain" parameterType="String" resultType="String">
+        SELECT
+            DOMAIN_TYPE
+        FROM
+            mail_domain
+        WHERE
+            DOMAIN_CD = #{domain_cd}
+    </select>
+
+    <insert id="addMailDomain" parameterType="map">
+        INSERT INTO
+            mail_domain(
+            `DOMAIN_CD`,
+            `DOMAIN_NAME`,
+            `DOMAIN_TYPE`)
+    VALUES (
+            #{domain_cd},
+            null,
+            '0')
+    </insert>
+
+
+
+</mapper>

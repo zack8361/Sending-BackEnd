@@ -3,7 +3,6 @@ package com.codingquokka.bottle.controller;
 import com.codingquokka.bottle.core.AES128;
 import com.codingquokka.bottle.service.BottleService;
 import com.codingquokka.bottle.service.MailService;
-import com.codingquokka.bottle.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
