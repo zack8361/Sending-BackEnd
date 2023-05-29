@@ -9,6 +9,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
 
 @Service
@@ -18,15 +20,24 @@ public class MailService {
     @Autowired
     private JavaMailSender emailSender;
 
+    @Autowired
+    private SpringTemplateEngine templateEngine;
+
+
     @Async
-    public void sendMail(String to, String subject, String text) throws Exception {
+    public void sendMail(String to, String subject, String templateName, String text) throws Exception {
         MimeMessage message = emailSender.createMimeMessage();
-        message.setText(text,"UTF-8","html");
+
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
         message.setFrom("bottle@gmail.com");
         message.setSubject(subject);
 
 
+        // 메일 내용 설정 : 템플릿 프로세스
+        Context context = new Context();
+        context.setVariable("to", to);
+        String html = templateEngine.process(templateName,context);
+        message.setText(html,"UTF-8","html");
 //        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, false, "UTF-8");
 //        mimeMessageHelper.setFrom("bottle@gmail.com");
 //        mimeMessageHelper.setTo(to);

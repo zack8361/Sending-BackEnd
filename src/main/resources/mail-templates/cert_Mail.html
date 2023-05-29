@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+  <style>
+  *{
+
+    text-align:center;
+  }
+
+  </style>
 </head>
+
 <body>
 <div class="emailauth_content">
   <div class="top">
@@ -26,14 +34,7 @@
     <div class="ficon_bar1"> </div>
     <div class="ficon_bar2"> </div>
 
-    <div class="title" style = 'color: #020202;
-         font-size: 230%;
-         font-family: "DungGeunMo", sans-serif;
-    font-weight: bold;
-    position: absolute;
-    left: 40%;
-    top: 53%;
-    z-index: 19;'>이메인증페이지</div>
+    <div class="title">이메일 인증페이지</div>
     <div class="topline1"> </div>
     <div class="topline2"> </div>
   </div>
@@ -67,10 +68,12 @@
     <div class="text_line1"></div>
     <div class="text_line2"></div>
     <div class="text_email">링크를 눌러 인증을 완료해주세요</div>
-    <button class="url_btn">
+    <button class="url_btn" style="background-color:blue;">
       {"|　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　|"}
       <br />
-      {"|　　　   https://www.hansung.ac.kr/sites/hansung/index.do 　　　　　|"}
+      받는 사람 : <span th:text="${to}"></span>
+      <br />
+      <div style="color:red;"> {"|　　https://www.hansung.ac.kr/sites/hansung/index.do 　　　　　|"}</div>
       <br />
       {"|　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　|"}
     </button>
