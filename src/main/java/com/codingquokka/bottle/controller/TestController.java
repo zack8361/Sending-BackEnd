@@ -111,11 +111,16 @@ public class TestController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/mailTest")
+    @GetMapping("/th/mailTest")
     public ResponseEntity mailTest() throws Exception {
         //String emailContent = MessageUtils.getMessage("send.cert.email").replace("${link}",MessageUtils.getMessage("server.ip")+"/certUser/"+ "UuidExample");
         mailService.sendMail("jjss77777@naver.com", "[Bottle] 인증을 완료해주세요", "cert_Mail","");
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/admin")
+    public String adminTest() throws Exception {
+        return "admin";
     }
 
     @GetMapping("/propertyTest")
