@@ -113,7 +113,6 @@ public class TestController {
 
     @GetMapping("/th/mailTest")
     public ResponseEntity mailTest() throws Exception {
-        //String emailContent = MessageUtils.getMessage("send.cert.email").replace("${link}",MessageUtils.getMessage("server.ip")+"/certUser/"+ "UuidExample");
         mailService.sendMail("jjss77777@naver.com", "[Bottle] 인증을 완료해주세요", "cert_Mail","");
         return ResponseEntity.ok().build();
     }
@@ -143,7 +142,6 @@ public class TestController {
 
     @GetMapping("/webTest")
     public ModelAndView webTest() throws Exception {
-
         return new ModelAndView("/cert/cert_Mail");
     }
 

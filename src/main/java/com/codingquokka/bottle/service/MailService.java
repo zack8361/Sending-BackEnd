@@ -23,7 +23,6 @@ public class MailService {
     @Autowired
     private SpringTemplateEngine templateEngine;
 
-
     @Async
     public void sendMail(String to, String subject, String templateName, String text) throws Exception {
         MimeMessage message = emailSender.createMimeMessage();
@@ -32,17 +31,11 @@ public class MailService {
         message.setFrom("bottle@gmail.com");
         message.setSubject(subject);
 
-
         // 메일 내용 설정 : 템플릿 프로세스
         Context context = new Context();
         context.setVariable("to", to);
         String html = templateEngine.process(templateName,context);
         message.setText(html,"UTF-8","html");
-//        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, false, "UTF-8");
-//        mimeMessageHelper.setFrom("bottle@gmail.com");
-//        mimeMessageHelper.setTo(to);
-//        mimeMessageHelper.setSubject(subject);
-////        mimeMessageHelper.setText(text,true);
 
         emailSender.send(message);
     }

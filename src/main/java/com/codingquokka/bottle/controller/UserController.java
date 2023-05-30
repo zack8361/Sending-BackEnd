@@ -35,6 +35,9 @@ public class UserController {
     @Autowired
     private AES128 aes128;
 
+    @Autowired
+    private MailService mailService;
+
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody HashMap<String, Object> map) throws Exception {
         map.put("email", aes128.decrypt((String) map.get("email")));
@@ -62,7 +65,6 @@ public class UserController {
         map.put("email",aes128.decrypt(map.get("email").toString()));
         map.put("uuid",UUID.randomUUID().toString());
 
-
         Map<String, String> responseData = new HashMap<String, String>();
 
         String[] email = map.get("email").toString().split("@");
@@ -71,13 +73,14 @@ public class UserController {
         int result =  userService.join(map);
         if (result == 1) {
             responseData.put("status", "success");
-            responseData.put("message", "성공");
+            responseData.put("message", "회원가입을 위한 인증 메일이 전송되었습니다.");
+            mailService.sendMail(map.get("email").toString(), "[BottleProject] 인증을 완료해주세요", "cert_Mail","");
         } else if (result == -1) {
             responseData.put("status", "fail");
             responseData.put("message", "가입할 수 없는 메일 도메인입니다.");
         }
-
         String joinResult = objectMapper.writeValueAsString(responseData); // Map을 JSON 형식으로 바꿔준다 !!
+
         return ResponseEntity.ok(joinResult);
     }
 
