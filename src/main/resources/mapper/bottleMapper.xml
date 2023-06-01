@@ -14,7 +14,7 @@
         FROM bottle_letter
         WHERE RECEIVER_ID = #{email}
           AND IS_USING = 1
-          AND IS_REPORTTED_MSG = 0;
+          AND IS_REPORTED_MSG = 0;
     </select>
 
     <select id="getSentBottles" parameterType="map" resultType="map">

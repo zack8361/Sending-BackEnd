@@ -45,7 +45,7 @@ public class UserController {
 
         Map<String, String> responseData = new HashMap<String, String>();
         if (res != null) {
-            if (res.get("IS_CERTIFIED").equals(1)) {
+            if (res.get("IS_CERTIFIED").equals("Y")) {
                 responseData.put("status", "success");
                 responseData.put("message", "성공");
             } else {
@@ -104,14 +104,13 @@ public class UserController {
 
     @GetMapping("/certUser/{encyptedUuid}")
     public ModelAndView cert(@PathVariable("encyptedUuid") String encyptedUuid) throws Exception {
-
         ModelAndView mv = new ModelAndView();
-
         if (userService.cert(aes128.decrypt(encyptedUuid)) == 1) {
             mv.setViewName("/cert/cert_Success");
         } else {
             mv.setViewName("/cert/cert_Fail");
         }
+
         return mv;
     }
 
