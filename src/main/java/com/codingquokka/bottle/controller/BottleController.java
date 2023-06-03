@@ -37,15 +37,20 @@ public class BottleController {
     @Autowired
     private AES128 aes128;
 
-    @GetMapping("/getReceivedBottles")
-    public ResponseEntity<String> getReceivedBottles(@RequestParam(value = "encryptedEmail",required = false) String encryptedEmail ) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, JsonProcessingException {
-        //react 에서 암호화해서 쏜 이메일 잘오는 것 확인
-        System.out.println("encryptedEmail = " + encryptedEmail);
+    @PostMapping("/getReceivedBottles")
+    public ResponseEntity<String> getReceivedBottles(@RequestBody HashMap<String, Object> map
+    ) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, JsonProcessingException {
 
         Map<String, Object> newMap = new HashMap<>();
-        newMap.put("email", aes128.decrypt(encryptedEmail, "common"));
+        newMap.put("email", aes128.decrypt(map.get("email").toString(), "common"));
         List<Map<String, Object>> result = bottleService.getReceivedBottles(newMap);
-        return ResponseEntity.ok(objectMapper.writeValueAsString(result));
+
+        Map<String, Object> respnseData = new HashMap<>();
+        respnseData.put("status", "success");
+        respnseData.put("message", result);
+
+
+        return ResponseEntity.ok(objectMapper.writeValueAsString(respnseData));
     }
 
     @GetMapping("/getSentBottles/{encyptedEmail}")

@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -53,7 +54,6 @@ public class UserController {
         Map<String, String> responseData = new HashMap<String, String>();
         if (res != null) {
             if (res.get("IS_CERTIFIED").equals("Y")) {
-                res.put("LAST_REQUEST", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
                 responseData.put("auth",aes128.encrypt(objectMapper.writeValueAsString(res),"login"));
                 responseData.put("status", "success");
                 responseData.put("message", "성공");
@@ -86,7 +86,6 @@ public class UserController {
         if (result == 1) {
             responseData.put("status", "success");
             responseData.put("message", "회원가입을 위한 인증 메일이 전송되었습니다.");
-            mailService.sendMail(map.get("email").toString(), "[BottleProject] 인증을 완료해주세요", "cert_Mail","");
         } else if (result == -1) {
             responseData.put("status", "fail");
             responseData.put("message", "가입할 수 없는 메일 도메인입니다.");
@@ -114,10 +113,13 @@ public class UserController {
         return ResponseEntity.ok(checkEmailResult);
     }
 
-    @GetMapping("/certUser/{encyptedUuid}")
-    public ModelAndView cert(@PathVariable("encyptedUuid") String encyptedUuid) throws Exception {
+    @GetMapping("/certUser/{base64Uuid}")
+    public ModelAndView cert(@PathVariable("base64Uuid") String base64Uuid) throws Exception {
+       byte [] base64EncryptedUuid = Base64.getDecoder().decode(base64Uuid);
+       String encryptedUuid = Base64.getEncoder().encodeToString(base64EncryptedUuid);
+
         ModelAndView mv = new ModelAndView();
-        if (userService.cert(aes128.decrypt(encyptedUuid, "common")) == 1) {
+        if (userService.cert(aes128.decrypt(encryptedUuid, "common")) == 1) {
             mv.setViewName("/cert/cert_Success");
         } else {
             mv.setViewName("/cert/cert_Fail");

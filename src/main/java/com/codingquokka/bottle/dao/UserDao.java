@@ -27,4 +27,7 @@ public class UserDao {
     public int cert(String uuid) {
         return sqlSession.update(namepace+".cert", uuid);
     }
+    public int checkUser(Map<String, Object> map) {
+        return sqlSession.selectOne(namepace+".checkUser",map);
+    }
 }

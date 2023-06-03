@@ -67,4 +67,19 @@
 		    IS_USING = 1
 	</update>
 
+	<select id="checkUser" parameterType="map" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			user
+		WHERE
+			user_id = #{USER_ID}
+		  	AND
+		    uuid = #{UUID}
+		  	AND
+		    is_certified = 'Y'
+		  AND
+			IS_USING = 1
+	</select>
+
 </mapper>

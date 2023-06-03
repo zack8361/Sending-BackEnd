@@ -45,10 +45,7 @@ public class UserService {
         } else if (domCheck.equals("-1")){
             return -1;
         }
-
-//        String emailContent = MessageUtils.getMessage("send.cert.email").replace("${link}",MessageUtils.getMessage("server.ip")+"/certUser/"+ aes128.encrypt(map.get("uuid").toString()));
-//        mailService.sendMail(map.get("email").toString(), "[Bottle] 인증을 완료해주세요", emailContent);
-
+        mailService.sendMail(map.get("email").toString(), "[BottleProject] 인증을 완료해주세요", "cert_Mail","");
         return result;
     }
     public int checkEmail(Map<String, Object> map) { return userDao.checkEmail(map); }
