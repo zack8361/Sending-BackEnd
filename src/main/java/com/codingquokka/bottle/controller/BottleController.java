@@ -43,7 +43,7 @@ public class BottleController {
         System.out.println("encryptedEmail = " + encryptedEmail);
 
         Map<String, Object> newMap = new HashMap<>();
-        newMap.put("email", aes128.decrypt(encryptedEmail));
+        newMap.put("email", aes128.decrypt(encryptedEmail, "common"));
         List<Map<String, Object>> result = bottleService.getReceivedBottles(newMap);
         return ResponseEntity.ok(objectMapper.writeValueAsString(result));
     }
@@ -51,7 +51,7 @@ public class BottleController {
     @GetMapping("/getSentBottles/{encyptedEmail}")
     public ResponseEntity<String> getSentBottles(@PathVariable("encryptedEmail") String encyptedEmail) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, JsonProcessingException {
         Map<String, Object> newMap = new HashMap<>();
-        newMap.put("email", aes128.decrypt(encyptedEmail));
+        newMap.put("email", aes128.decrypt(encyptedEmail, "common"));
         List<Map<String, Object>> result = bottleService.getSentBottles(newMap);
         return ResponseEntity.ok(objectMapper.writeValueAsString(result));
     }

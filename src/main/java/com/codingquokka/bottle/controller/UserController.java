@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -40,14 +43,19 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody HashMap<String, Object> map) throws Exception {
-        map.put("email", aes128.decrypt((String) map.get("email")));
+        map.put("email", aes128.decrypt((String) map.get("email"), "common"));
         Map<String, Object> res = userService.login(map);
 
         Map<String, String> responseData = new HashMap<String, String>();
         if (res != null) {
             if (res.get("IS_CERTIFIED").equals("Y")) {
+                res.put("LAST_REQUEST", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
+                responseData.put("auth",aes128.encrypt(objectMapper.writeValueAsString(res),"login"));
                 responseData.put("status", "success");
                 responseData.put("message", "성공");
+//                System.out.println(aes128.decrypt(responseData.get("auth"), "login"));
+//                System.out.println(objectMapper.readValue(aes128.decrypt(responseData.get("auth"), "login"), Map.class));
+
             } else {
                 responseData.put("status", "fail");
                 responseData.put("message", "인증되지 않은 계정입니다.");
@@ -62,7 +70,7 @@ public class UserController {
 
     @PostMapping("/join")
     public ResponseEntity<Object> join(@RequestBody HashMap<String, Object> map) throws Exception  {
-        map.put("email",aes128.decrypt(map.get("email").toString()));
+        map.put("email",aes128.decrypt(map.get("email").toString(), "common"));
         map.put("uuid",UUID.randomUUID().toString());
 
         Map<String, String> responseData = new HashMap<String, String>();
@@ -86,7 +94,7 @@ public class UserController {
 
     @PostMapping("/checkEmail")
     public ResponseEntity<Object> checkEmail(@RequestBody HashMap<String, Object> map) throws Exception {
-        map.put("email", aes128.decrypt((String) map.get("email")));
+        map.put("email", aes128.decrypt((String) map.get("email"), "common"));
 
         int res = userService.checkEmail(map);
 
@@ -105,7 +113,7 @@ public class UserController {
     @GetMapping("/certUser/{encyptedUuid}")
     public ModelAndView cert(@PathVariable("encyptedUuid") String encyptedUuid) throws Exception {
         ModelAndView mv = new ModelAndView();
-        if (userService.cert(aes128.decrypt(encyptedUuid)) == 1) {
+        if (userService.cert(aes128.decrypt(encyptedUuid, "common")) == 1) {
             mv.setViewName("/cert/cert_Success");
         } else {
             mv.setViewName("/cert/cert_Fail");

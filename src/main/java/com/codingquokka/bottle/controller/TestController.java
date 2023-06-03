@@ -133,9 +133,9 @@ public class TestController {
     public ResponseEntity aesTest() throws Exception {
         String str = "I love you";
 
-        String enStr = aes128.encrypt(str);
+        String enStr = aes128.encrypt(str, "common");
         System.out.println(enStr);
-        String deStr = aes128.decrypt(enStr);
+        String deStr = aes128.decrypt(enStr, "common");
         System.out.println(deStr);
         return ResponseEntity.ok().build();
     }

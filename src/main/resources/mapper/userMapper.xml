@@ -11,6 +11,7 @@
 		SELECT
 		     USER_ID,
 		     BELONG,
+		     UUID,
 			 IS_CERTIFIED
 		FROM
 		    user

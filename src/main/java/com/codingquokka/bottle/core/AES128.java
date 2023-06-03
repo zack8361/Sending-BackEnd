@@ -20,27 +20,40 @@ import java.util.Locale;
 public class AES128 {
     private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
 
-    public String decrypt(String str) throws NoSuchPaddingException, NoSuchAlgorithmException,
+    public String decrypt(String str, String type) throws NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidAlgorithmParameterException, InvalidKeyException,
             IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
-;
+        SecretKeySpec secretKeySpec = null;
+        IvParameterSpec ivParameterSpec = null;
+        if (type.equals("common")) {
+            secretKeySpec = new SecretKeySpec(MessageUtils.getMessage("aes.key").getBytes(), "AES");
+            ivParameterSpec = new IvParameterSpec(MessageUtils.getMessage("aes.iv").getBytes(StandardCharsets.UTF_8));
+        }
+        else if (type.equals("login")) {
+            secretKeySpec = new SecretKeySpec(MessageUtils.getMessage("aes.login.key").getBytes(), "AES");
+            ivParameterSpec = new IvParameterSpec(MessageUtils.getMessage("aes.login.iv").getBytes(StandardCharsets.UTF_8));
+        }
 
         Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-        SecretKeySpec secretKeySpec = new SecretKeySpec(MessageUtils.getMessage("aes.key").getBytes(), "AES");
-        IvParameterSpec ivParameterSpec = new IvParameterSpec(MessageUtils.getMessage("aes.iv").getBytes(StandardCharsets.UTF_8));
-
         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
 
         return new String(cipher.doFinal(Base64.getDecoder().decode(str)), "UTF-8");
     }
 
-    public String encrypt(String str) throws NoSuchPaddingException, NoSuchAlgorithmException,
+    public String encrypt(String str, String type) throws NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidAlgorithmParameterException, InvalidKeyException,
             IllegalBlockSizeException, BadPaddingException {
 
-        SecretKeySpec secretKeySpec = new SecretKeySpec(MessageUtils.getMessage("aes.key").getBytes(), "AES");
-        IvParameterSpec ivParameterSpec = new IvParameterSpec(MessageUtils.getMessage("aes.iv").getBytes(StandardCharsets.UTF_8));
-
+        SecretKeySpec secretKeySpec = null;
+        IvParameterSpec ivParameterSpec = null;
+        if (type.equals("common")) {
+            secretKeySpec = new SecretKeySpec(MessageUtils.getMessage("aes.key").getBytes(), "AES");
+            ivParameterSpec = new IvParameterSpec(MessageUtils.getMessage("aes.iv").getBytes(StandardCharsets.UTF_8));
+        }
+        else if (type.equals("login")) {
+            secretKeySpec = new SecretKeySpec(MessageUtils.getMessage("aes.login.key").getBytes(), "AES");
+            ivParameterSpec = new IvParameterSpec(MessageUtils.getMessage("aes.login.iv").getBytes(StandardCharsets.UTF_8));
+        }
         Cipher cipher = Cipher.getInstance(TRANSFORMATION);
         cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
 
