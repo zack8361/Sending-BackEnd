@@ -3,6 +3,7 @@ package com.codingquokka.bottle.controller;
 
 import com.codingquokka.bottle.core.MessageUtils;
 import com.codingquokka.bottle.dao.UserDao;
+import com.codingquokka.bottle.service.EmoticonService;
 import com.codingquokka.bottle.service.MailDomainService;
 import com.codingquokka.bottle.service.MailService;
 import com.codingquokka.bottle.service.UserService;
@@ -40,6 +41,9 @@ public class UserController {
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private EmoticonService emoticonService;
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody HashMap<String, Object> map) throws Exception {
@@ -120,6 +124,22 @@ public class UserController {
         }
 
         return mv;
+    }
+
+    @GetMapping("/getEmoticon/{emoId}")
+    public ResponseEntity<Object> getEmoticon(@PathVariable("emoId") int emoId) {
+        Map<String, String> responseData = new HashMap<>();
+
+        String emoticon = emoticonService.getEmoticon(emoId);
+
+        if (emoticon != null) {
+            responseData.put("status", "success");
+            responseData.put("message", emoticon);
+        }
+        else {
+            responseData.put("status", "fail");
+        }
+        return ResponseEntity.ok(responseData);
     }
 
 

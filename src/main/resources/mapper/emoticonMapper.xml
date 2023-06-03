@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.emoticonMapper">
+    <select id="getEmoticon" parameterType="map" resultType="String">
+        SELECT
+            emo_text
+        FROM text_emoticon
+        <choose>
+            <when test="emoId == 0">
+                WHERE emo_id = 0
+            </when>
+            <otherwise>
+                WHERE emo_id != 1
+                ORDER BY RAND() LIMIT 1;
+            </otherwise>
+        </choose>
+    </select>
+
+
+
+</mapper>
