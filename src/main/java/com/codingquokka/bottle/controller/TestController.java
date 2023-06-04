@@ -142,7 +142,7 @@ public class TestController {
 
     @GetMapping("/webTest")
     public ModelAndView webTest() throws Exception {
-        return new ModelAndView("/cert/cert_Mail");
+        return new ModelAndView("admin");
     }
 
 }

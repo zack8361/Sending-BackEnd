@@ -53,14 +53,14 @@ public class UserController {
         params.put("email", aes128.decrypt((String) params.get("email"), "common"));
         Map<String, Object> res = userService.login(params);
 
+        System.out.println(res);
         Map<String, String> responseData = new HashMap<String, String>();
         if (res != null) {
             if (res.get("IS_CERTIFIED").equals("Y")) {
+                res.put("LAST_REQUEST", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
                 responseData.put("auth",aes128.encrypt(objectMapper.writeValueAsString(res),"login"));
                 responseData.put("status", "success");
                 responseData.put("message", "성공");
-//                System.out.println(aes128.decrypt(responseData.get("auth"), "login"));
-//                System.out.println(objectMapper.readValue(aes128.decrypt(responseData.get("auth"), "login"), Map.class));
 
             } else {
                 responseData.put("status", "fail");

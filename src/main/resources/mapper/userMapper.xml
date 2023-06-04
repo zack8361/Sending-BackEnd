@@ -9,16 +9,16 @@
 	<!-- 로그인  -->
 	<select id="login" parameterType="map" resultType="map">
 		SELECT
-		     USER_ID,
+		     EMAIL,
 		     BELONG,
 		     UUID,
 			 IS_CERTIFIED
 		FROM
 		    user
 		WHERE
-			USER_ID = #{email}
+			EMAIL = #{email}
 		  AND
-		    USER_PW=#{password}
+			PASSWORD=#{password}
 		  AND
 		    IS_USING = 1
 	</select>
@@ -26,8 +26,8 @@
 	<insert id="join" parameterType="map">
 		INSERT INTO
 		    user(
-		         `USER_ID`,
-		         `USER_PW`,
+		         `EMAIL`,
+		         `PASSWORD`,
 		         `IS_CERTIFIED`,
 		         `CNT_RECEIVED`,
 		         `JOIN_DT`,
@@ -53,7 +53,7 @@
 		FROM
 		    user
 		WHERE
-		    user_id = #{email}
+			EMAIL = #{email}
 		  AND
 		    IS_USING = 1
 	</select>
@@ -73,7 +73,7 @@
 		FROM
 			user
 		WHERE
-			user_id = #{USER_ID}
+			EMAIL = #{EMAIL}
 		  	AND
 		    uuid = #{UUID}
 		  	AND
