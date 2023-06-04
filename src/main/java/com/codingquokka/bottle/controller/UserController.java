@@ -47,7 +47,7 @@ public class UserController {
     private EmoticonService emoticonService;
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody HashMap<String, Object> map) throws Exception {
+    public ResponseEntity<Object> login(@RequestParam HashMap<String, Object> map) throws Exception {
         map.put("email", aes128.decrypt((String) map.get("email"), "common"));
         Map<String, Object> res = userService.login(map);
 
@@ -73,7 +73,7 @@ public class UserController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Object> join(@RequestBody HashMap<String, Object> map) throws Exception  {
+    public ResponseEntity<Object> join(@RequestParam HashMap<String, Object> map) throws Exception  {
         map.put("email",aes128.decrypt(map.get("email").toString(), "common"));
         map.put("uuid",UUID.randomUUID().toString());
 
@@ -96,7 +96,7 @@ public class UserController {
     }
 
     @PostMapping("/checkEmail")
-    public ResponseEntity<Object> checkEmail(@RequestBody HashMap<String, Object> map) throws Exception {
+    public ResponseEntity<Object> checkEmail(@RequestParam HashMap<String, Object> map) throws Exception {
         map.put("email", aes128.decrypt((String) map.get("email"), "common"));
 
         int res = userService.checkEmail(map);

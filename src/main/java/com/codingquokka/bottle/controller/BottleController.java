@@ -38,7 +38,7 @@ public class BottleController {
     private AES128 aes128;
 
     @PostMapping("/getReceivedBottles")
-    public ResponseEntity<String> getReceivedBottles(@RequestBody HashMap<String, Object> map
+    public ResponseEntity<String> getReceivedBottles(@RequestParam HashMap<String, Object> map
     ) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, JsonProcessingException {
 
         Map<String, Object> newMap = new HashMap<>();
@@ -62,7 +62,7 @@ public class BottleController {
     }
 
     @PostMapping("sendBottleLetter")
-    public ResponseEntity<String> getSentBottles(@RequestBody HashMap<String, Object> map) throws JsonProcessingException {
+    public ResponseEntity<String> getSentBottles(@RequestParam HashMap<String, Object> map) throws JsonProcessingException {
        Map<String, Object> result = new HashMap<>();
        result.put("status", bottleService.sendBottleLetter(map));
         return ResponseEntity.ok(objectMapper.writeValueAsString(result));
