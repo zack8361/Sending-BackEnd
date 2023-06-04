@@ -47,9 +47,11 @@ public class UserController {
     private EmoticonService emoticonService;
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestParam HashMap<String, Object> map) throws Exception {
-        map.put("email", aes128.decrypt((String) map.get("email"), "common"));
-        Map<String, Object> res = userService.login(map);
+    public ResponseEntity<Object> login(@RequestParam HashMap<String, Object> params) throws Exception {
+
+        System.out.println(params);
+        params.put("email", aes128.decrypt((String) params.get("email"), "common"));
+        Map<String, Object> res = userService.login(params);
 
         Map<String, String> responseData = new HashMap<String, String>();
         if (res != null) {

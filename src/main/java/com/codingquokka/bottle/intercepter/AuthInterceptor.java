@@ -31,7 +31,8 @@ public class AuthInterceptor {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
 
-
+        System.out.println("intercept");
+        System.out.println(request.getParameter("auth"));
         Object result = joinPoint.proceed();
 
 

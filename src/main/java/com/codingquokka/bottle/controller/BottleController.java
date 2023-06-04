@@ -41,6 +41,7 @@ public class BottleController {
     public ResponseEntity<String> getReceivedBottles(@RequestParam HashMap<String, Object> map
     ) throws InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, UnsupportedEncodingException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, JsonProcessingException {
 
+        System.out.println("asdasdasdasdasdas");
         Map<String, Object> newMap = new HashMap<>();
         newMap.put("email", aes128.decrypt(map.get("email").toString(), "common"));
         List<Map<String, Object>> result = bottleService.getReceivedBottles(newMap);
