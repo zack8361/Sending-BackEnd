@@ -37,6 +37,7 @@
                 `RECEIVER_ID`,
                 `IS_READ`,
                 `IS_REPORTED_MSG`,
+                `IS_CONTINUED`,
                 `SEND_DT`,
                 `IS_USING` )
         VALUES (
@@ -44,14 +45,15 @@
                 #{title},
                 #{sender_id},
                 #{receiver_id},
-                '0',
-                '0',
+                'N',
+                'N',
+                'N',
                 DATE_FORMAT(NOW(),'%Y-%m-%d'),
                 1 )
 
     </insert>
 
-    <select id="getLeastReceivedUser">
+    <select id="getLeastReceivedUser" resultType="String">
         SELECT USER_ID
         FROM user u
             JOIN mail_domain as d
