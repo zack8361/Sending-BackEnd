@@ -1,83 +1,71 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-  <style>
-  *{
-
-    text-align:center;
-  }
-
-  </style>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
 
 <body>
-<div class="emailauth_content">
-  <div class="top">
-    <div class="topbox1" style="position: absolute; left: 0%; right: 0%; height: 35%; background-color: #bebfd5; z-index: 2;"></div>
-    <div class="topbox2"></div>
-    <div class="topbox3"></div>
-    <div class="sicon_box1"> </div>
-    <div class="sicon_box2"> </div>
-    <div class="sicon_box3"> </div>
-    <div class="sicon_bar1"> </div>
-    <div class="sicon_bar2"> </div>
-    <div class="home_box1"> </div>
-    <div class="home_box2"> </div>
-    <div class="home_box3"> </div>
-    <div class="home_bar1"> </div>
-    <div class="home_bar2"> </div>
-    <div class="ficon_box1"> </div>
-    <div class="ficon_box2"> </div>
-    <div class="ficon_box3"> </div>
-    <div class="ficon_bar1"> </div>
-    <div class="ficon_bar2"> </div>
+<div className="emailauth_content" style="background-color:#c2c2c2; width: 90%; height:100%; margin: auto; padding-bottom: 20%;" >
+  <div className="topbox1" style="height: 3%; background-color: #bebfd5; padding: 0.3%;">
+    <div className="topbox2" style="height: 70%; background-color: #545296; padding: 0.3%; display: flex;">
+      <div className="topbox3" style="height: 80%; width:96%; background-color: #00017f; text-align: center;">
+        <h2 style="color:#ffffff;">이메일 인증 페이지<h2>
+      </div>
+      <div style="background-color: #c2c2c2; width: 4%;  padding-top: 0.4%; padding-left: 0.4%;">
+        <div className="sicon_box3" style="width: 100%; background-color: #ffffff; height:100%;">
+        </div>
+      </div>
 
-    <div class="title">이메일 인증페이지</div>
-    <div class="topline1"> </div>
-    <div class="topline2"> </div>
+    </div>
   </div>
 
-  <div class="left_container">
-    <div class="logo">
+  <div className="title" style="background-color :#c2c2c2; text-align:center; height: 100%; padding-top: 3%;" ></div>
+  <div className="topline1" style="background-color:#000000; height:5px; width:100%;"></div>
+  <div className="topline2" style="background-color:#ffffff; height:3px; width:100%"></div>
 
-      {"　　　☆彡　｡∴｡　　　　･｡∴｡｡　☆彡 ｡　　｡∴｡｡☆　　☆彡　　　　" }
+  <div class="container" style="display:flex; text-align: center; padding-top: 3%; height:100%;">
+    <div className="left_container" style="text-align: center; padding-right: 2%;  padding-top:10%; width:50%;" >
+      　　　☆彡　｡∴｡　　　　･｡∴｡｡　☆彡 ｡　　｡∴｡｡☆　　☆彡　　　　
       <br />
-      {"　　　　☆｡∴　　　｡｡　☆　　　･｡∴｡｡　☆　　　　*｡∴｡｡★　　" }
+      　　　　☆｡∴　　　｡｡　☆　　　･｡∴｡｡　☆　　　　*｡∴｡｡★　　
       <br />
-      {"　　　*｡★　　　　∧__∧　☆｡　　･ﾟ　　　　　　☆｡∴　　　　" }
+      　　　*｡★　　　　∧__∧　☆｡　　･ﾟ　　　　　　☆｡∴　　　　
       <br />
-      {"　★　　　｡∴　｡*( ｀Д´ )｡　　ﾟ　*당장 ｡　　　 ｡" }
+      　★　　　｡∴　｡*( ｀Д´ )｡　　ﾟ　*당장 ｡　　　 ｡
       <br />
-      {"　　　　☆　　｡｡(っ▄︻▇〓┳═ ･*　★　　이메일 ☆･ ｡" }
+      　　　　☆　　｡｡(っ▄︻▇〓┳═ ･*　★　　이메일 ☆･ ｡
       <br />
-      {"　　　･ﾟ*｡★　　/ ) ｡･　　･ﾟ｡　･ 　　 　　☆인증해 ☆･ ｡　　　　" }
-      {"･ ｡･　　　　　( /￣∪｡*･ﾟ　*｡★　｡･*　　｡｡∴｡　　　　　　" }
+      　･ﾟ*｡★　　/ ) ｡･　　･ﾟ｡　･ 　　 　　☆인증해 ☆･ ｡　
       <br />
-      {"　　　｡∴｡　☆　　｡　　　　　･｡∴｡｡　☆　　　　　ﾟ｡　☆彡｡･*･"}
+      ･ ｡･　　　　　( /￣∪｡*･ﾟ　*｡★　｡･*　　｡｡∴｡　　　　　　
       <br />
-      {"　　　｡∴｡　　　　･｡∴｡｡　☆　　　 ｡　　　　☆｡∴｡☆　　☆彡　　*･ﾟ" }
+      　　　｡∴｡　☆　　｡　　　　　･｡∴｡｡　☆　　　　　ﾟ｡　☆彡｡･*･
+      <br />
+      　　　｡∴｡　　　　･｡∴｡｡　☆　　　 ｡　　　　☆｡∴｡☆　　☆彡　　*･ﾟ
     </div>
 
+    <div className="right_container" style="width:40%; height:400px;" >
+      <div className="grey_box" style="background-color:#d0d0d0; width:100%; height: 100%;">
+        <div className="text_box3" style="background-color: #000000;  padding-top:3px; width:100%; height:100%">
+          <div className="grey_box" style="background-color:#d0d0d0; padding:4px; width:100%; height: 100%">
+            <div className="blue_box" style="color:#fff; background-color:#00017f; width:100%; height: 100%; display: flex; align-items: center; justify-content: center; ">
+              <div class="contentDiv">
+                <div className="text_email" style=" text-align: center;" >링크를 눌러 인증을 완료해주세요</div>
+                <div className="url" onClick="#" style="width:100%;" >
+                  ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ
+                  <br />
+                  |&nbsp;&nbsp;&nbsp;&nbsp;https://www.hansung.ac.kr/sites/hansung/index.do&nbsp;&nbsp;&nbsp;&nbsp;|
+                  <br />
+                  ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ ㅡ
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="right_container">
-    <div class="text_box1"></div>
-    <div class="text_box2"></div>
-    <div class="text_box3"></div>
-    <div class="text_line1"></div>
-    <div class="text_line2"></div>
-    <div class="text_email">링크를 눌러 인증을 완료해주세요</div>
-    <button class="url_btn" style="background-color:#D5D5D5;">
-      {"|　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　￣　|"}
-      <br />
-      받는 사람 : <span th:text="${to}"></span>
-      <br />
-      <div> {"|　　https://www.hansung.ac.kr/sites/hansung/index.do 　　　　　|"}</div>
-      <br />
-      {"|　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　＿　|"}
-    </button>
-  </div>
-</div>
+</div> <!-- 말고 -->
 </body>
 </html>
