@@ -2,6 +2,7 @@ package com.codingquokka.bottle.service;
 
 import com.codingquokka.bottle.core.AES128;
 import com.codingquokka.bottle.core.MessageUtils;
+import com.codingquokka.bottle.dao.MailDomainDao;
 import com.codingquokka.bottle.dao.UserDao;
 import com.codingquokka.bottle.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class UserService {
     private UserDao userDao;
 
     @Autowired
-    private AES128 aes128;
+    private MailDomainDao mailDomainDao;
 
     @Autowired
     private MailService mailService;
@@ -48,7 +49,23 @@ public class UserService {
         mailService.sendMail(map.get("email").toString(), "[BottleProject] 인증을 완료해주세요", "cert_Mail","");
         return result;
     }
-    public int checkEmail(Map<String, Object> map) { return userDao.checkEmail(map); }
+    public int checkEmail(Map<String, Object> map) {
+
+        int count = userDao.checkEmail(map);
+
+        if(count == 0) {
+            String domCheck = mailDomainService.checkMailDomain(map.get("email").toString().split("@")[1]);
+
+            if (domCheck.equals("-1")) {
+                return -1;
+            }else {
+                return 0;
+            }
+        }
+        else {
+            return 1;
+        }
+    }
 
     public void insertTest() {
         userDao.insertTest();

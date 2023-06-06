@@ -107,6 +107,9 @@ public class UserController {
         if(res == 1){
             responseData.put("status", "fail");
             responseData.put("message", "이미 존재하는 계정입니다.");
+        } else if(res == -1) {
+            responseData.put("status", "fail");
+            responseData.put("message", "가입 불가능한 이메일 도메인 입니다.\n(회사, 조직, 학교메일이 아닌 공용 메일 도메인)");
         } else {
             responseData.put("status", "success");
             responseData.put("message", "가입 가능한 계정입니다.");
