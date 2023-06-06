@@ -29,6 +29,14 @@ public class BottleController {
     @Autowired
     private AES128 aes128;
 
+    @GetMapping("/authCheck")
+    public ResponseEntity<String> authCheck(@RequestParam HashMap<String, Object> param, HttpServletRequest request) throws Exception {
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("auth", request.getAttribute("auth"));
+        responseData.put("status", "success");
+        return ResponseEntity.ok(objectMapper.writeValueAsString(responseData));
+    }
+
     @GetMapping("/getReceivedBottles")
     public ResponseEntity<String> getReceivedBottles(@RequestParam HashMap<String, Object> param, HttpServletRequest request) throws Exception {
         Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
