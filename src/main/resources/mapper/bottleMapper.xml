@@ -54,15 +54,15 @@
     </insert>
 
     <select id="getLeastReceivedUser" resultType="String">
-        SELECT USER_ID
+        SELECT u.email
         FROM user u
             JOIN mail_domain as d
             ON d.DOMAIN_CD = u.BELONG
-                AND u.user_id != #{email}
+                AND u.email != #{email}
                 AND u.belong = (
                     SELECT belong
                     FROM user u1
-                    WHERE u1.user_id = #{email}
+                    WHERE u1.email = #{email}
                 )
         ORDER BY u.CNT_RECEIVED
             LIMIT 1;

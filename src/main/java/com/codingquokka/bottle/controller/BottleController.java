@@ -32,30 +32,62 @@ public class BottleController {
     @GetMapping("/getReceivedBottles")
     public ResponseEntity<String> getReceivedBottles(@RequestParam HashMap<String, Object> param, HttpServletRequest request) throws Exception {
         Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("auth", request.getAttribute("auth"));
 
         List<Map<String, Object>> result = bottleService.getReceivedBottles(authMap);
-        Map<String, Object> respnseData = new HashMap<>();
-        respnseData.put("status", "success");
-        respnseData.put("message", result);
-        respnseData.put("auth", request.getAttribute("auth"));
 
+        if (result != null) {
+            responseData.put("status", "success");
+            responseData.put("message", objectMapper.writeValueAsString(result));
+        }
+        else {
+            responseData.put("status", "fail");
+            responseData.put("message", "보낸 메세지 로드에 실패하였습니다.\n관리자에게 문의하세요");
+        }
 
-        return ResponseEntity.ok(objectMapper.writeValueAsString(respnseData));
+        return ResponseEntity.ok(objectMapper.writeValueAsString(responseData));
     }
 
     @GetMapping("/getSentBottles")
     public ResponseEntity<String> getSentBottles(@RequestParam HashMap<String, Object> param, HttpServletRequest request) throws Exception {
         Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("auth", request.getAttribute("auth"));
 
         List<Map<String, Object>> result = bottleService.getSentBottles(authMap);
-        return ResponseEntity.ok(objectMapper.writeValueAsString(result));
+
+        if (result != null) {
+            responseData.put("status", "success");
+            responseData.put("message", objectMapper.writeValueAsString(result));
+        }
+        else {
+            responseData.put("status", "fail");
+            responseData.put("message", "보낸 메세지 로드에 실패하였습니다.\n관리자에게 문의하세요");
+        }
+
+        return ResponseEntity.ok(objectMapper.writeValueAsString(responseData));
     }
 
     @PostMapping("sendBottleLetter")
-    public ResponseEntity<String> getSentBottles(@RequestParam HashMap<String, Object> param) throws Exception {
-       Map<String, Object> result = new HashMap<>();
-       result.put("status", bottleService.sendBottleLetter(param));
-        return ResponseEntity.ok(objectMapper.writeValueAsString(result));
+    public ResponseEntity<String> sendBottleLetter(@RequestParam HashMap<String, Object> param, HttpServletRequest request) throws Exception {
+        Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("auth", request.getAttribute("auth"));
+
+        param.put("sender_id", authMap.get("EMAIL"));
+        int result = bottleService.sendBottleLetter(param);
+
+        if (result == 1) {
+           responseData.put("status", "success");
+           responseData.put("message", "메세지 전송에 성공하였습니다.");
+       }
+       else {
+           responseData.put("status", "fail");
+           responseData.put("message", "메세지 전송에 실패하였습니다.\n관리자에게 문의하세요");
+
+       }
+        return ResponseEntity.ok(objectMapper.writeValueAsString(responseData));
     }
 
 }
