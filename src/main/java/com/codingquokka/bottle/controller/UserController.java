@@ -58,7 +58,7 @@ public class UserController {
         if (res != null) {
             if (res.get("IS_CERTIFIED").equals("Y")) {
                 res.put("LAST_REQUEST", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
-                responseData.put("auth",aes128.encrypt(objectMapper.writeValueAsString(res),"login"));
+                responseData.put("auth", aes128.encrypt(objectMapper.writeValueAsString(res), "login"));
                 responseData.put("status", "success");
                 responseData.put("message", "성공");
 
@@ -75,16 +75,16 @@ public class UserController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Object> join(@RequestParam HashMap<String, Object> map) throws Exception  {
-        map.put("email",aes128.decrypt(map.get("email").toString(), "common"));
-        map.put("uuid",UUID.randomUUID().toString());
+    public ResponseEntity<Object> join(@RequestParam HashMap<String, Object> map) throws Exception {
+        map.put("email", aes128.decrypt(map.get("email").toString(), "common"));
+        map.put("uuid", UUID.randomUUID().toString());
 
         Map<String, String> responseData = new HashMap<String, String>();
 
         String[] email = map.get("email").toString().split("@");
         map.put("belong", email[1]);
         map.put("domain_cd", email[1]);
-        int result =  userService.join(map);
+        int result = userService.join(map);
         if (result == 1) {
             responseData.put("status", "success");
             responseData.put("message", "회원가입을 위한 인증 메일이 전송되었습니다.");
@@ -104,10 +104,10 @@ public class UserController {
         int res = userService.checkEmail(map);
 
         Map<String, String> responseData = new HashMap<String, String>();
-        if(res == 1){
+        if (res == 1) {
             responseData.put("status", "fail");
             responseData.put("message", "이미 존재하는 계정입니다.");
-        } else if(res == -1) {
+        } else if (res == -1) {
             responseData.put("status", "fail");
             responseData.put("message", "가입 불가능한 이메일 도메인 입니다.\n(회사, 조직, 학교메일이 아닌 공용 메일 도메인)");
         } else {
@@ -118,21 +118,16 @@ public class UserController {
         return ResponseEntity.ok(checkEmailResult);
     }
 
-    @GetMapping("/certUser/{base64Uuid}")
-    public ModelAndView cert(@PathVariable("base64Uuid") String base64Uuid) throws Exception {
-       byte [] base64EncryptedUuid = Base64.getDecoder().decode(base64Uuid);
-       String encryptedUuid = Base64.getEncoder().encodeToString(base64EncryptedUuid);
+    @GetMapping("/certUser")
+    public String cert(@RequestParam("data") String data) throws Exception {
 
-        ModelAndView mv = new ModelAndView();
-        if (userService.cert(aes128.decrypt(encryptedUuid, "common")) == 1) {
-            mv.setViewName("/cert/cert_Success");
+        if (userService.cert(aes128.decrypt(data, "common")) == 1) {
+            return "cert_Success";
         } else {
-            mv.setViewName("/cert/cert_Fail");
+            return "cert_Fail";
         }
 
-        return mv;
     }
-
     @GetMapping("/getEmoticon/{emoId}")
     public ResponseEntity<Object> getEmoticon(@PathVariable("emoId") int emoId) {
         Map<String, String> responseData = new HashMap<>();
@@ -142,13 +137,11 @@ public class UserController {
         if (emoticon != null) {
             responseData.put("status", "success");
             responseData.put("message", emoticon);
-        }
-        else {
+        } else {
             responseData.put("status", "fail");
         }
         return ResponseEntity.ok(responseData);
     }
-
 
 
 }

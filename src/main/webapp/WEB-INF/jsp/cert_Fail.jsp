@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +12,7 @@
     <div className="topbox1" style="height: 3%; background-color: #bebfd5; padding: 0.3%;">
         <div className="topbox2" style="height: 70%; background-color: #545296; padding: 0.3%; display: flex;">
             <div className="topbox3" style="height: 80%; width:96%; background-color: #00017f; text-align: center;">
-                <h2 style="color:#ffffff;">이메일 인증 페이지<h2>
+                <h2 style="color:#ffffff;">이메일 인증 페이지</h2>
             </div>
             <div style="background-color: #c2c2c2; width: 4%;  padding-top: 0.4%; padding-left: 0.4%;">
                 <div className="sicon_box3" style="width: 100%; background-color: #ffffff; height:100%;">
