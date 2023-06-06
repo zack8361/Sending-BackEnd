@@ -67,6 +67,15 @@
 		    IS_USING = 1
 	</update>
 
+	<update id="upCntReceived" parameterType="String">
+		UPDATE user
+		SET CNT_RECEIVED = CNT_RECEIVED + 1
+		WHERE
+			EMAIL = #{email}
+		  AND
+			IS_USING = 1
+	</update>
+
 	<select id="checkUser" parameterType="map" resultType="int">
 		SELECT
 			COUNT(*)

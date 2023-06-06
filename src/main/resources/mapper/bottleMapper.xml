@@ -10,11 +10,12 @@
         SELECT
             LETTER_ID,
             TITLE,
-            SEND_DT
+            SEND_DT,
+            IS_READ
         FROM bottle_letter
-        WHERE RECEIVER_ID = #{email}
+        WHERE RECEIVER_ID = #{EMAIL}
           AND IS_USING = 1
-          AND IS_REPORTED_MSG = 0;
+          AND IS_REPORTED_MSG = 'N';
     </select>
 
     <select id="getSentBottles" parameterType="map" resultType="map">
@@ -24,7 +25,7 @@
             SEND_DT,
             IS_READ
         FROM bottle_letter
-        WHERE SENDER_ID = #{email}
+        WHERE SENDER_ID = #{EMAIL}
           AND IS_USING = 1
     </select>
 

@@ -15,6 +15,9 @@ public class BottleService {
     @Autowired
     private BottleLetterDao bottleLetterDao;
 
+    @Autowired
+    private UserService userService;
+
     public List<Map<String, Object>> getReceivedBottles(Map<String, Object> param) {
         return bottleLetterDao.getReceivedBottles(param);
     }
@@ -26,6 +29,7 @@ public class BottleService {
     public int sendBottleLetter(Map<String, Object> param) {
 
         param.put("receiver_id", bottleLetterDao.getLeastReceivedUser((String) param.get("sender_id")));
+        userService.upCntReceived(param.get("receiver_id").toString());
 
         return bottleLetterDao.sendBottleLetter(param);
     }

@@ -90,7 +90,7 @@ public class UserController {
             responseData.put("message", "회원가입을 위한 인증 메일이 전송되었습니다.");
         } else if (result == -1) {
             responseData.put("status", "fail");
-            responseData.put("message", "가입할 수 없는 메일 도메인입니다.");
+            responseData.put("message", "가입할 수 없는 메일 도메인입니다.\n(회사, 조직, 학교메일이 아닌 공용 메일 도메인)");
         }
         String joinResult = objectMapper.writeValueAsString(responseData); // Map을 JSON 형식으로 바꿔준다 !!
 
@@ -109,7 +109,7 @@ public class UserController {
             responseData.put("message", "이미 존재하는 계정입니다.");
         } else if (res == -1) {
             responseData.put("status", "fail");
-            responseData.put("message", "가입 불가능한 이메일 도메인 입니다.\n(회사, 조직, 학교메일이 아닌 공용 메일 도메인)");
+            responseData.put("message", "가입할 수 없는 메일 도메인입니다.\n(회사, 조직, 학교메일이 아닌 공용 메일 도메인)");
         } else {
             responseData.put("status", "success");
             responseData.put("message", "가입 가능한 계정입니다.");

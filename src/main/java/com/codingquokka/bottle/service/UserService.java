@@ -75,4 +75,8 @@ public class UserService {
     public int cert(String uuid) {
         return userDao.cert(uuid);
     }
+
+    public int upCntReceived(String email) {
+        return userDao.upCntReceived(email);
+    }
 }
