@@ -98,4 +98,16 @@ public class BottleController {
         return ResponseEntity.ok(objectMapper.writeValueAsString(responseData));
     }
 
+//    내가 받은 이메일 내용 , 제목 , 보낸 시간 뽑기.
+    @GetMapping("/showEmailContent")
+    public ResponseEntity<Object> showEmailContent (@RequestParam HashMap<String, Object> param, HttpServletRequest request) throws Exception{
+
+        Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("auth", request.getAttribute("auth"));
+        return null;
+    }
+
+
+
 }
