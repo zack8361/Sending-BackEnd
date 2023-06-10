@@ -85,7 +85,7 @@
 
     <update id="reportBottleLetter" parameterType="map">
         UPDATE bottle_letter
-        SET IS_REPORTED_MSG = 1
+        SET IS_REPORTED_MSG = 'Y'
         WHERE LETTER_ID = #{letterId}
           AND (SENDER_ID = #{EMAIL} OR RECEIVER_ID = #{EMAIL})
           AND IS_USING = 1
@@ -93,7 +93,7 @@
 
     <update id="changeIsRead" parameterType="map">
         UPDATE bottle_letter
-        SET IS_READ = 1
+        SET IS_READ = 'Y'
         WHERE LETTER_ID = #{letterId}
           AND (SENDER_ID = #{EMAIL} OR RECEIVER_ID = #{EMAIL})
           AND IS_USING = 1
