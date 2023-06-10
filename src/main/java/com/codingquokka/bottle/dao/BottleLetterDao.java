@@ -23,8 +23,20 @@ public class BottleLetterDao {
         return sqlSession.selectList(namepace+".getSentBottles", map);
     }
 
+    public Map<String, Object> getBottleDetail(Map<String, Object> map ) {
+        return sqlSession.selectOne(namepace+".getBottleDetail", map);
+    }
+
     public int sendBottleLetter(Map<String, Object> map) {
         return sqlSession.insert(namepace+".sendBottleLetter", map);
+    }
+
+    public int changeIsRead(Map<String, Object> map) {
+        return sqlSession.update(namepace+".changeIsRead", map);
+    }
+
+    public int reportBottleLetter(Map<String, Object> map) {
+        return sqlSession.update(namepace+".reportBottleLetter", map);
     }
 
     public String getLeastReceivedUser(String email) {

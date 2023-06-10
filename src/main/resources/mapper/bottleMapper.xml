@@ -29,6 +29,20 @@
           AND IS_USING = 1
     </select>
 
+    <select id="getBottleDetail" parameterType="map" resultType="map">
+        SELECT
+            LETTER_ID,
+            TITLE,
+            CONTENT,
+            SEND_DT,
+            IS_READ,
+            IS_REPORTED_MSG
+        FROM bottle_letter
+        WHERE LETTER_ID = #{letterId}
+          AND (SENDER_ID = #{EMAIL} OR RECEIVER_ID = #{EMAIL})
+          AND IS_USING = 1
+    </select>
+
     <insert id="sendBottleLetter" parameterType="map">
         INSERT INTO
             bottle_letter(
@@ -72,8 +86,16 @@
     <update id="reportBottleLetter" parameterType="map">
         UPDATE bottle_letter
         SET IS_REPORTED_MSG = 1
-        WHERE LETTER_ID = #{letter_id}
+        WHERE LETTER_ID = #{letterId}
+          AND (SENDER_ID = #{EMAIL} OR RECEIVER_ID = #{EMAIL})
+          AND IS_USING = 1
     </update>
 
-
+    <update id="changeIsRead" parameterType="map">
+        UPDATE bottle_letter
+        SET IS_READ = 1
+        WHERE LETTER_ID = #{letterId}
+          AND (SENDER_ID = #{EMAIL} OR RECEIVER_ID = #{EMAIL})
+          AND IS_USING = 1
+    </update>
 </mapper>
