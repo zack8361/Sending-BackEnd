@@ -30,6 +30,9 @@ public class UserDao {
     public int upCntReceived(String email) {
         return sqlSession.update(namepace+".upCntReceived", email);
     }
+    public int changePassword(Map<String,Object> map) {
+        return sqlSession.update(namepace+".changePassword", map);
+    }
     public int checkUser(Map<String, Object> map) {
         return sqlSession.selectOne(namepace+".checkUser",map);
     }

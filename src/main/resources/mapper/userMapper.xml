@@ -91,4 +91,15 @@
 			IS_USING = 1
 	</select>
 
+	<update id="changePassword" parameterType="map">
+		UPDATE user
+		SET PASSWORD = #{newPassword}
+		WHERE
+			EMAIL = #{EMAIL}
+		  AND
+			uuid = #{UUID}
+		  AND
+			IS_USING = 1
+	</update>
+
 </mapper>

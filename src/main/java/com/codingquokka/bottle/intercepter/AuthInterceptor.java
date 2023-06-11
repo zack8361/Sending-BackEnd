@@ -35,7 +35,8 @@ public class AuthInterceptor {
 
     private LocalDateTime now = null;
 
-    @Around("execution(* com.codingquokka.bottle.controller.BottleController.*(..))")
+    @Around("execution(* com.codingquokka.bottle.controller.BottleController.*(..))|| " +
+            "execution(* com.codingquokka.bottle.controller.UserController.*(..))")
     public Object interceptAuth(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         Map<String, Object> authMap;

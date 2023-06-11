@@ -79,4 +79,9 @@ public class UserService {
     public int upCntReceived(String email) {
         return userDao.upCntReceived(email);
     }
+    public int changePassword(Map<String, Object> map) {
+        return userDao.changePassword(map);
+    }
+
+
 }
