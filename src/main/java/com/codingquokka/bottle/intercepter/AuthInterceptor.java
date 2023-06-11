@@ -52,6 +52,7 @@ public class AuthInterceptor {
             authMap.put("LAST_REQUEST", now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
             request.setAttribute("auth",aes128.encrypt(objectMapper.writeValueAsString(authMap), "login"));
             request.setAttribute("authMap", authMap);
+            System.out.println(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")) + " - " + request.getRequestURI() + " auth : " + authMap);
 
         } catch (Exception e) {
             Map<String, Object> result = new HashMap<>();

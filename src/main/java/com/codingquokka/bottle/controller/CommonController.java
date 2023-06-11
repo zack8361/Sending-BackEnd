@@ -36,11 +36,9 @@ public class CommonController {
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestParam HashMap<String, Object> params) throws Exception {
 
-        System.out.println(params);
         params.put("email", aes128.decrypt((String) params.get("email"), "common"));
         Map<String, Object> res = userService.login(params);
 
-        System.out.println(res);
         Map<String, String> responseData = new HashMap<String, String>();
         if (res != null) {
             if (res.get("IS_CERTIFIED").equals("Y")) {

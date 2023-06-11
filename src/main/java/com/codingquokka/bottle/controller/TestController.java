@@ -122,12 +122,12 @@ public class TestController {
         return "admin";
     }
 
-    @GetMapping("/propertyTest")
-    public ResponseEntity propertyTest() throws Exception {
-        System.out.println(MessageUtils.getMessage("aes.key"));
-        System.out.println(MessageUtils.getMessage("aes.iv"));
-        return ResponseEntity.ok().build();
-    }
+//    @GetMapping("/propertyTest")
+//    public ResponseEntity propertyTest() throws Exception {
+//        System.out.println(MessageUtils.getMessage("aes.key"));
+//        System.out.println(MessageUtils.getMessage("aes.iv"));
+//        return ResponseEntity.ok().build();
+//    }
 
     @GetMapping("/aesTest")
     public ResponseEntity aesTest() throws Exception {

@@ -97,7 +97,9 @@
 		WHERE
 			EMAIL = #{EMAIL}
 		  AND
-			uuid = #{UUID}
+			UUID = #{UUID}
+		  AND
+			PASSWORD = #{oldPassword}
 		  AND
 			IS_USING = 1
 	</update>
