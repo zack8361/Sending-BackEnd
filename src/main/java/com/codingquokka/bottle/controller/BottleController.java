@@ -141,8 +141,4 @@ public class BottleController {
         return ResponseEntity.ok(objectMapper.writeValueAsString(responseData));
     }
 
-
-
-
-
 }
