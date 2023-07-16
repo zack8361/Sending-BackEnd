@@ -34,3 +34,4 @@ build/
 src/main/resources/databaseContext.xml
 src/main/resources/mailContext.xml
 src/main/resources/messages.properties
+src/main/resources/firebase/sending-54ad7-firebase-adminsdk-2go5p-2e2bb0cf60.json
