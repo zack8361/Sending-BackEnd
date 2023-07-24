@@ -1,10 +1,7 @@
 package com.codingquokka.bottle.controller;
 
 
-import com.codingquokka.bottle.service.EmoticonService;
-import com.codingquokka.bottle.service.MailDomainService;
-import com.codingquokka.bottle.service.MailService;
-import com.codingquokka.bottle.service.UserService;
+import com.codingquokka.bottle.service.*;
 import com.codingquokka.bottle.core.AES128;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +19,9 @@ import java.util.UUID;
 public class CommonController {
 
     @Autowired
+    private FirebaseCloudMessageService firebaseCloudMessageService;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -36,6 +36,7 @@ public class CommonController {
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestParam HashMap<String, Object> params) throws Exception {
 
+        System.out.println("map = " + params);
         params.put("email", aes128.decrypt((String) params.get("email"), "common"));
         Map<String, Object> res = userService.login(params);
 
@@ -46,7 +47,6 @@ public class CommonController {
                 responseData.put("auth", aes128.encrypt(objectMapper.writeValueAsString(res), "login"));
                 responseData.put("status", "success");
                 responseData.put("message", "성공");
-
             } else {
                 responseData.put("status", "fail");
                 responseData.put("message", "인증되지 않은 계정입니다.");
@@ -61,16 +61,20 @@ public class CommonController {
 
     @PostMapping("/join")
     public ResponseEntity<Object> join(@RequestParam HashMap<String, Object> map) throws Exception {
+
         map.put("email", aes128.decrypt(map.get("email").toString(), "common"));
         map.put("uuid", UUID.randomUUID().toString());
-
         Map<String, String> responseData = new HashMap<String, String>();
-
         String[] email = map.get("email").toString().split("@");
         map.put("belong", email[1]);
         map.put("domain_cd", email[1]);
+
+//      회원 가입 로직
         int result = userService.join(map);
+
+//      회원 가입 성공시 토큰 -> fcm table 에 insert
         if (result == 1) {
+            firebaseCloudMessageService.insertToken(map);
             responseData.put("status", "success");
             responseData.put("message", "회원가입을 위한 인증 메일이 전송되었습니다.");
         } else if (result == -1) {

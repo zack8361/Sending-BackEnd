@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.fcmMapper">
+    <insert id="insertToken" parameterType="map" >
+        INSERT INTO
+            fcm_token(`USER_ID`,
+                      `TOKEN`,
+                      `IS_USING`,
+                      `LAST_SENDING`)
+        VALUES (
+                #{email},
+                #{token},
+                1,
+                DATE_FORMAT(NOW(),'%Y-%m-%d-%H:%i')
+               )
+
+    </insert>
+</mapper>
