@@ -42,6 +42,8 @@ public class CommonController {
         System.out.println("map = " + params);
         params.put("email", aes128.decrypt((String) params.get("email"), "common"));
         Map<String, Object> res = userService.login(params);
+        fcmTokenService.insertToken(params);
+
 
         Map<String, String> responseData = new HashMap<String, String>();
         if (res != null) {
