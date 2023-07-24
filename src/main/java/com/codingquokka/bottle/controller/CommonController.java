@@ -33,6 +33,9 @@ public class CommonController {
     @Autowired
     private EmoticonService emoticonService;
 
+    @Autowired
+    private FcmTokenService fcmTokenService;
+
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestParam HashMap<String, Object> params) throws Exception {
 
@@ -74,7 +77,7 @@ public class CommonController {
 
 //      회원 가입 성공시 토큰 -> fcm table 에 insert
         if (result == 1) {
-            firebaseCloudMessageService.insertToken(map);
+            fcmTokenService.insertToken(map);
             responseData.put("status", "success");
             responseData.put("message", "회원가입을 위한 인증 메일이 전송되었습니다.");
         } else if (result == -1) {

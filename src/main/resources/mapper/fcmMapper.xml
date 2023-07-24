@@ -20,4 +20,10 @@
                )
 
     </insert>
+
+    <select id="getToken" parameterType="map" resultType="com.codingquokka.bottle.vo.FcmTokenVO">
+        SELECT *
+        FROM fcm_token
+        WHERE USER_ID =#{sender_id}
+    </select>
 </mapper>

@@ -1,6 +1,6 @@
 package com.codingquokka.bottle.service;
 
-import com.codingquokka.bottle.dao.FirebaseCloudMessageDao;
+import com.codingquokka.bottle.dao.FcmTokenDao;
 import com.codingquokka.bottle.vo.FirebaseCloudMessageVO;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,14 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class FirebaseCloudMessageService {
     @Autowired
-    FirebaseCloudMessageDao firebaseCloudMessageDao;
+    FcmTokenDao firebaseCloudMessageDao;
 
     @Value("${project.properties.firebase-create-scoped}")
     String fireBaseCreateScoped;
@@ -43,7 +42,6 @@ public class FirebaseCloudMessageService {
                 .build();
 
         Response response = client.newCall(request).execute();
-
         System.out.println(response.body().string());
     }
 
@@ -72,7 +70,5 @@ public class FirebaseCloudMessageService {
         return googleCredentials.getAccessToken().getTokenValue();
     }
 
-    public void insertToken(HashMap<String, Object> map) {
-        firebaseCloudMessageDao.insertToken(map);
-    }
+
 }

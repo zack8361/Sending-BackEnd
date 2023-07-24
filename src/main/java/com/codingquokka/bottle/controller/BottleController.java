@@ -2,7 +2,10 @@ package com.codingquokka.bottle.controller;
 
 import com.codingquokka.bottle.core.AES128;
 import com.codingquokka.bottle.service.BottleService;
+import com.codingquokka.bottle.service.FcmTokenService;
+import com.codingquokka.bottle.service.FirebaseCloudMessageService;
 import com.codingquokka.bottle.service.MailService;
+import com.codingquokka.bottle.vo.FcmTokenVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +28,12 @@ public class BottleController {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private FirebaseCloudMessageService firebaseCloudMessageService;
+
+    @Autowired
+    private FcmTokenService fcmTokenService;
 
     @Autowired
     private AES128 aes128;
@@ -127,8 +136,14 @@ public class BottleController {
         responseData.put("auth", request.getAttribute("auth"));
 
         param.put("sender_id", authMap.get("EMAIL"));
+
+
         int result = bottleService.sendBottleLetter(param);
 
+//      지금 보낸 사람 아이디로 토큰 값 가져오기.
+        FcmTokenVO fcmTokenVO = fcmTokenService.getToken(param);
+        System.out.println("fcmTokenVO = " + fcmTokenVO.getToken());
+        firebaseCloudMessageService.sendMessageTo(fcmTokenVO.getToken(),"메세지가 도착했음","확인해보세요 메세지내용을");
         if (result == 1) {
            responseData.put("status", "success");
            responseData.put("message", "메세지 전송에 성공하였습니다.");
