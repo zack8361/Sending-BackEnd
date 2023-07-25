@@ -137,13 +137,13 @@ public class BottleController {
 
         param.put("sender_id", authMap.get("EMAIL"));
 
-
         int result = bottleService.sendBottleLetter(param);
 
 //      지금 보낸 사람 아이디로 토큰 값 가져오기.
         FcmTokenVO fcmTokenVO = fcmTokenService.getToken(param);
         System.out.println("fcmTokenVO = " + fcmTokenVO.getToken());
         firebaseCloudMessageService.sendMessageTo(fcmTokenVO.getToken(),"메세지가 도착했음","확인해보세요 메세지내용을");
+
         if (result == 1) {
            responseData.put("status", "success");
            responseData.put("message", "메세지 전송에 성공하였습니다.");
