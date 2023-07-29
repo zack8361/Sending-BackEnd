@@ -15,12 +15,15 @@ public class FcmTokenDao {
 
     private static String namepace = "mapper.fcmMapper";
 
-    public  void insertToken(HashMap<String, Object> map) {
+    public void insertToken(HashMap<String, Object> map) {
         sqlSession.insert(namepace +".insertToken",map);
     }
 
-    public FcmTokenVO getToken(HashMap<String, Object> param) {
-    return sqlSession.selectOne(namepace +".getToken",param);
+    public int isTokenExist(HashMap<String, Object> param) {
+        return sqlSession.selectOne(namepace +".isTokenExist",param);
+    }
 
+    public FcmTokenVO getToken(HashMap<String, Object> param) {
+        return sqlSession.selectOne(namepace +".getToken",param);
     }
 }

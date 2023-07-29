@@ -7,31 +7,32 @@
 
 <mapper namespace="mapper.fcmMapper">
     <insert id="insertToken" parameterType="map" >
-        MERGE INTO fcm_token AS ft
-        USING (
-            SELECT #{email} AS email, #{token} AS token
-            ) data
-        ON data.email = ft.USER_ID
-            and
-           data.token = ft.TOKEN
-        WHEN NOT MATCHED THEN
-            INSERT IGNORE INTO
-                fcm_token(`USER_ID`,
-                          `TOKEN`,
-                          `IS_USING`,
-                        `LAST_SENDING`
-            )
-            VALUES (
-                    #{email},
-                    #{token},
-                    1,
-                    DATE_FORMAT(NOW(),'%Y-%m-%d-%H:%i')
-            )
+        INSERT INTO
+            fcm_token(
+                    `USER_ID`,
+                    `TOKEN`,
+                    `IS_USING`,
+                    `LAST_SENDING`
+        )
+        VALUES (
+                #{email},
+                #{token},
+                1,
+                DATE_FORMAT(NOW(),'%Y-%m-%dT%H:%i:%s')
+        )
     </insert>
+
+    <select id="isTokenExist" parameterType="map" resultType="int">
+        SELECT count(TOKEN)
+        FROM fcm_token
+        WHERE USER_ID = #{sender_id}
+            AND
+            TOKEN = #{token}
+    </select>
 
     <select id="getToken" parameterType="map" resultType="com.codingquokka.bottle.vo.FcmTokenVO">
         SELECT *
         FROM fcm_token
-        WHERE USER_ID =#{sender_id}
+        WHERE USER_ID = #{sender_id}
     </select>
 </mapper>

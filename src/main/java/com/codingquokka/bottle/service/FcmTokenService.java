@@ -11,9 +11,13 @@ import java.util.HashMap;
 @Service
 public class FcmTokenService {
 
-    @Autowired FcmTokenDao fcmTokenDao;
+    @Autowired
+    private FcmTokenDao fcmTokenDao;
+
     public void insertToken(HashMap<String, Object> map) {
-        fcmTokenDao.insertToken(map);
+        if (fcmTokenDao.isTokenExist(map) == 0) {
+            fcmTokenDao.insertToken(map);
+        }
     }
 
     public FcmTokenVO getToken(HashMap<String, Object> param) {
