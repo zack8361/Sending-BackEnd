@@ -25,7 +25,7 @@
     <select id="isTokenExist" parameterType="map" resultType="int">
         SELECT count(TOKEN)
         FROM fcm_token
-        WHERE USER_ID = #{sender_id}
+        WHERE USER_ID = #{email}
             AND
             TOKEN = #{token}
     </select>
