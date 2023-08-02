@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 
 
 @Service
@@ -20,7 +21,7 @@ public class FcmTokenService {
         }
     }
 
-    public FcmTokenVO getToken(HashMap<String, Object> param) {
+    public List<FcmTokenVO> getToken(HashMap<String, Object> param) {
 
         return fcmTokenDao.getToken(param);
     }

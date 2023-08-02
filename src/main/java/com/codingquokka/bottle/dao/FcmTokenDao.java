@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Repository
 public class FcmTokenDao {
@@ -23,7 +24,7 @@ public class FcmTokenDao {
         return sqlSession.selectOne(namepace +".isTokenExist",param);
     }
 
-    public FcmTokenVO getToken(HashMap<String, Object> param) {
-        return sqlSession.selectOne(namepace +".getToken",param);
+    public List<FcmTokenVO> getToken(HashMap<String, Object> param) {
+        return sqlSession.selectList(namepace +".getToken",param);
     }
 }
