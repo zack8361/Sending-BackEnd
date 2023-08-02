@@ -4,6 +4,7 @@ package com.codingquokka.bottle.controller;
 import com.codingquokka.bottle.core.AES128;
 import com.codingquokka.bottle.core.MessageUtils;
 import com.codingquokka.bottle.dao.UserDao;
+import com.codingquokka.bottle.service.FirebaseCloudMessageService;
 import com.codingquokka.bottle.service.MailService;
 import com.codingquokka.bottle.service.UserService;
 import com.codingquokka.bottle.vo.UserVO;
@@ -29,6 +30,9 @@ public class TestController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FirebaseCloudMessageService firebaseCloudMessageService;
 
     @Autowired
     private MailService mailService;
@@ -143,6 +147,18 @@ public class TestController {
     @GetMapping("/webTest")
     public ModelAndView webTest() throws Exception {
         return new ModelAndView("admin");
+    }
+
+    @GetMapping("/fcmTest")
+    public ResponseEntity fcmTest() throws Exception {
+
+        firebaseCloudMessageService.sendMessageTo(
+                "d_amssuhPCnM7SmzVw4-pR:APA91bGgZkrVCcqgmnK4nwVHhC9tOHj44-GdnyVp-1SmCKid6hwTsLdlwEQcT-vOkkZ-8G_MLx2Aec1jLnWZRNoQpKec2nBHZhAwUKqB6Bw89kRbGvwkv5g_t3bQy-sO7o1_2EoctS0i",
+                "테스트",
+                "바디"
+        );
+
+        return ResponseEntity.ok().build();
     }
 
 
