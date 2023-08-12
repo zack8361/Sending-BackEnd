@@ -113,7 +113,8 @@
 			 	FROM bottle_letter
 			 	WHERE sender_id = #{EMAIL}
 			) as CNT_SENT,
-			DATEDIFF(date(JOIN_DT), now()) as DDAY
+			DATEDIFF(now(), date(JOIN_DT) as DDAY
+				) as DDAY
 		FROM user
 		WHERE EMAIL = #{EMAIL}
 			AND
