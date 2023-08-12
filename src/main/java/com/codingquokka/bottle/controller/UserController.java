@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,6 +56,17 @@ public class UserController {
         }
 
         return ResponseEntity.ok(responseData);
+    }
+
+    @GetMapping("/getUserInfo")
+    public ResponseEntity<String> getUserInfo(@RequestParam HashMap<String, Object> params, HttpServletRequest request) throws Exception {
+        Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("auth", request.getAttribute("auth"));
+        responseData.put("status", "success");
+        responseData.put("message", userService.getUserInfo(authMap));
+
+        return ResponseEntity.ok(objectMapper.writeValueAsString(responseData));
     }
 
 }

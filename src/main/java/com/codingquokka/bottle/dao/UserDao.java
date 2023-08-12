@@ -1,10 +1,8 @@
 package com.codingquokka.bottle.dao;
 
-import com.codingquokka.bottle.vo.UserVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -35,5 +33,9 @@ public class UserDao {
     }
     public int checkUser(Map<String, Object> map) {
         return sqlSession.selectOne(namepace+".checkUser",map);
+    }
+
+    public Map<String, Object> getUserInfo(Map<String, Object> map) {
+        return sqlSession.selectOne(namepace + ".getUserInfo", map);
     }
 }

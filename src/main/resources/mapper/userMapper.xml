@@ -104,4 +104,20 @@
 			IS_USING = 1
 	</update>
 
+	<select id="getUserInfo" parameterType="map">
+		SELECT
+		    EMAIL,
+			CNT_RECEIVED,
+			(
+				SELECT count(sender_id)
+			 	FROM bottle_letter
+			 	WHERE sender_id = #{EMAIL}
+			) as CNT_SENT,
+			DATEDIFF(date(JOIN_DT), now()) as DDAY
+		FROM user
+		WHERE EMAIL = #{EMAIL}
+			AND
+		    IS_USING = 1
+	</select>
+
 </mapper>

@@ -84,4 +84,7 @@ public class UserService {
     }
 
 
+    public Map<String, Object> getUserInfo(Map<String, Object> map) {
+        return userDao.getUserInfo(map);
+    }
 }
