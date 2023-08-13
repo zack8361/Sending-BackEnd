@@ -8,11 +8,14 @@ import com.codingquokka.bottle.service.FirebaseCloudMessageService;
 import com.codingquokka.bottle.service.MailService;
 import com.codingquokka.bottle.service.UserService;
 import com.codingquokka.bottle.vo.UserVO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -39,6 +42,36 @@ public class TestController {
 
     @Autowired
     private AES128 aes128;
+
+
+    @PostMapping("/apiTest")
+    public ResponseEntity<Object> getApiTest(@RequestBody HashMap<String, Object> map){
+        System.out.println("map = " + map);
+        HashMap<String,String> map2 = new HashMap<>();
+        map2.put("status","200");
+        return ResponseEntity.ok(map2);
+    }
+
+    @GetMapping("/listing")
+    public ResponseEntity<Object> getList() throws JsonProcessingException {
+        System.out.println("여기에 접근했다 lsiting");
+        ArrayList<String> list = new ArrayList<>();
+        list.add("kong");
+        list.add("kong");
+        list.add("kong");
+        list.add("kong");
+        list.add("kong");
+        list.add("kong");
+        list.add("kong");
+        list.add("kong");
+        list.add("kong");
+
+
+        return ResponseEntity.ok(om.writeValueAsString(list));
+    }
+
+
+
     @GetMapping("/test")
     public ArrayList<String> testHandler() {
         ArrayList<String> list = new ArrayList<>();
