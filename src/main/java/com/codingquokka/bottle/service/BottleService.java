@@ -1,6 +1,8 @@
 package com.codingquokka.bottle.service;
 
 import com.codingquokka.bottle.dao.BottleLetterDao;
+import com.codingquokka.bottle.vo.BottleLetterVO;
+import com.codingquokka.bottle.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,23 +21,21 @@ public class BottleService {
     @Autowired
     private UserService userService;
 
-    public List<Map<String, Object>> getReceivedBottles(Map<String, Object> param) {
-        return bottleLetterDao.getReceivedBottles(param);
+    public List<BottleLetterVO> getReceivedBottles(String email) {
+        return bottleLetterDao.getReceivedBottles(email);
     }
 
-    public List<Map<String, Object>> getSentBottles(Map<String, Object> param) {
-        return bottleLetterDao.getSentBottles(param);
+    public List<BottleLetterVO> getSentBottles(String email) {
+        return bottleLetterDao.getSentBottles(email);
     }
 
-    public Map<String, Object> getBottleDetail(Map<String, Object> param) {
+    public BottleLetterVO getBottleDetail(Map<String, Object> param) {
 
-        Map<String, Object> bottle = bottleLetterDao.getBottleDetail(param);
-        if (bottle.get("IS_REPORTED_MSG").equals("Y")) {
-            Map<String, Object> result = new HashMap<>();
-            bottle.clear();
-            bottle.put("IS_REPORTED_MSG", "Y");
+        BottleLetterVO bottle = bottleLetterDao.getBottleDetail(param);
+        if (bottle.getIsReportedMsg().equals("Y")) {
+            BottleLetterVO reportedBottle = BottleLetterVO.builder().isReportedMsg("Y").build();
 
-            return bottle;
+            return reportedBottle;
         }
         else {
             bottleLetterDao.changeIsRead(param);

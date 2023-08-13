@@ -1,5 +1,7 @@
 package com.codingquokka.bottle.dao;
 
+import com.codingquokka.bottle.vo.UserVO;
+import org.apache.catalina.User;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,7 +16,7 @@ public class UserDao {
 
     private static String namepace = "mapper.userMapper";
 
-    public Map<String, Object> login(Map<String, Object> map) {
+    public UserVO login(Map<String, Object> map) {
         return sqlSession.selectOne(namepace+".login", map);
     }
     public int join(Map<String, Object> map) {return sqlSession.insert(namepace+".join", map); }
@@ -31,11 +33,11 @@ public class UserDao {
     public int changePassword(Map<String,Object> map) {
         return sqlSession.update(namepace+".changePassword", map);
     }
-    public int checkUser(Map<String, Object> map) {
-        return sqlSession.selectOne(namepace+".checkUser",map);
+    public int checkUser(UserVO userVO) {
+        return sqlSession.selectOne(namepace+".checkUser",userVO);
     }
 
-    public Map<String, Object> getUserInfo(Map<String, Object> map) {
-        return sqlSession.selectOne(namepace + ".getUserInfo", map);
+    public UserVO getUserInfo(String email) {
+        return sqlSession.selectOne(namepace + ".getUserInfo", email);
     }
 }

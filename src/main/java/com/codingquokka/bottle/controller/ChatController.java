@@ -23,7 +23,7 @@ public class ChatController {
 
     @PostMapping("/openChat")
     public ResponseEntity<String> openChat(@RequestParam HashMap<String, Object> param, HttpServletRequest request) {
-        Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
+        Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authorizedUserVO");
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("auth", request.getAttribute("auth"));
 
@@ -33,7 +33,7 @@ public class ChatController {
 
     @GetMapping("/getChatList")
     public ResponseEntity<String> getChatList(@RequestParam HashMap<String, Object> param, HttpServletRequest request) {
-        Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
+        Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authorizedUserVO");
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("auth", request.getAttribute("auth"));
 
@@ -42,7 +42,7 @@ public class ChatController {
 
     @PostMapping("/sendChatMsg")
     public ResponseEntity<String> sendChatMsg(@RequestParam HashMap<String, Object> param, HttpServletRequest request) {
-        Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
+        Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authorizedUserVO");
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("auth", request.getAttribute("auth"));
 

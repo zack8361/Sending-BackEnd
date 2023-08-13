@@ -1,5 +1,6 @@
 package com.codingquokka.bottle.dao;
 
+import com.codingquokka.bottle.vo.BottleLetterVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,15 +16,15 @@ public class BottleLetterDao {
 
     private static String namepace = "mapper.bottleMapper";
 
-    public List<Map<String, Object>> getReceivedBottles(Map<String, Object> map ) {
-        return sqlSession.selectList(namepace+".getReceivedBottles", map);
+    public List<BottleLetterVO> getReceivedBottles(String email) {
+        return sqlSession.selectList(namepace+".getReceivedBottles", email);
     }
 
-    public List<Map<String, Object>> getSentBottles(Map<String, Object> map ) {
-        return sqlSession.selectList(namepace+".getSentBottles", map);
+    public List<BottleLetterVO> getSentBottles(String email) {
+        return sqlSession.selectList(namepace+".getSentBottles", email);
     }
 
-    public Map<String, Object> getBottleDetail(Map<String, Object> map ) {
+    public BottleLetterVO getBottleDetail(Map<String, Object> map) {
         return sqlSession.selectOne(namepace+".getBottleDetail", map);
     }
 

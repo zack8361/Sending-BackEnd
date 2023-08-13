@@ -7,18 +7,18 @@
 
 <mapper namespace="mapper.userMapper">
 	<!-- 로그인  -->
-	<select id="login" parameterType="map" resultType="map">
+	<select id="login" parameterType="map" resultType="com.codingquokka.bottle.vo.UserVO">
 		SELECT
-		     EMAIL,
-		     BELONG,
-		     UUID,
-			 IS_CERTIFIED
+		     EMAIL as email,
+		     BELONG as belong,
+		     UUID as uuid,
+			 CERTIFIED as certified
 		FROM
 		    user
 		WHERE
-			EMAIL = #{email}
+			EMAIL =  #{email}
 		  AND
-			PASSWORD=#{password}
+			PASSWORD= #{password}
 		  AND
 		    IS_USING = 1
 	</select>
@@ -76,15 +76,15 @@
 			IS_USING = 1
 	</update>
 
-	<select id="checkUser" parameterType="map" resultType="int">
+	<select id="checkUser" parameterType="com.codingquokka.bottle.vo.UserVO" resultType="com.codingquokka.bottle.vo.UserVO">
 		SELECT
 			COUNT(*)
 		FROM
 			user
 		WHERE
-			EMAIL = #{EMAIL}
+			EMAIL = #{email}
 		  	AND
-		    uuid = #{UUID}
+		    uuid = #{uuid}
 		  	AND
 		    is_certified = 'Y'
 		  AND
@@ -104,19 +104,18 @@
 			IS_USING = 1
 	</update>
 
-	<select id="getUserInfo" parameterType="map" resultType="map">
+	<select id="getUserInfo" parameterType="String" resultType="com.codingquokka.bottle.vo.UserVO">
 		SELECT
-		    EMAIL,
-			CNT_RECEIVED,
+		    EMAIL as email,
+			CNT_RECEIVED as cntReceived,
 			(
 				SELECT count(sender_id)
 			 	FROM bottle_letter
-			 	WHERE sender_id = #{EMAIL}
-			) as CNT_SENT,
-			DATEDIFF(now(), date(JOIN_DT)) as DDAY,
-			JOIN_DT
+			 	WHERE sender_id = #{email}
+			) as cntSent,
+			DATEDIFF(now(), date(JOIN_DT)) as dDay
 		FROM user
-		WHERE EMAIL = #{EMAIL}
+		WHERE EMAIL = #{email}
 			AND
 		    IS_USING = 1
 	</select>

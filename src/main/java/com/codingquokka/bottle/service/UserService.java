@@ -1,7 +1,5 @@
 package com.codingquokka.bottle.service;
 
-import com.codingquokka.bottle.core.AES128;
-import com.codingquokka.bottle.core.MessageUtils;
 import com.codingquokka.bottle.dao.MailDomainDao;
 import com.codingquokka.bottle.dao.UserDao;
 import com.codingquokka.bottle.vo.UserVO;
@@ -26,7 +24,7 @@ public class UserService {
     @Autowired
     private MailDomainService mailDomainService;
 
-    public Map<String, Object> login(Map<String, Object> map){
+    public UserVO login(Map<String, Object> map){
         return userDao.login(map);
     }
 
@@ -84,7 +82,7 @@ public class UserService {
     }
 
 
-    public Map<String, Object> getUserInfo(Map<String, Object> map) {
-        return userDao.getUserInfo(map);
+    public UserVO getUserInfo(String email) {
+        return userDao.getUserInfo(email);
     }
 }

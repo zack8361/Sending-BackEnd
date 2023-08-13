@@ -33,5 +33,5 @@
          <!-- 가져온 값이 null일때 setter나 맵의 put 메소드를 호출할지를 명시 (false일경우, null인 field는 
             제거되어 나타남 : default는 false -->
          <setting name="callSettersOnNulls" value="true" />
-   </settings>      
+   </settings>
 </configuration>

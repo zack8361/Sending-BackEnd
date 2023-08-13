@@ -3,6 +3,7 @@ package com.codingquokka.bottle.controller;
 
 import com.codingquokka.bottle.service.*;
 import com.codingquokka.bottle.core.AES128;
+import com.codingquokka.bottle.vo.UserVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,15 +42,15 @@ public class CommonController {
 
         System.out.println("map = " + params);
         params.put("email", aes128.decrypt((String) params.get("email"), "common"));
-        Map<String, Object> res = userService.login(params);
+        UserVO loginUser = userService.login(params);
         fcmTokenService.insertToken(params);
 
 
         Map<String, String> responseData = new HashMap<String, String>();
-        if (res != null) {
-            if (res.get("IS_CERTIFIED").equals("Y")) {
-                res.put("LAST_REQUEST", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
-                responseData.put("auth", aes128.encrypt(objectMapper.writeValueAsString(res), "login"));
+        if (loginUser != null) {
+            if (loginUser.getCertified() == 1) {
+                loginUser.setLastRequest(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
+                responseData.put("auth", aes128.encrypt(objectMapper.writeValueAsString(loginUser), "login"));
                 responseData.put("status", "success");
                 responseData.put("message", "성공");
             } else {

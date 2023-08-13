@@ -1,10 +1,10 @@
 package com.codingquokka.bottle.controller;
 
 import com.codingquokka.bottle.core.AES128;
-import com.codingquokka.bottle.service.EmoticonService;
 import com.codingquokka.bottle.service.MailDomainService;
 import com.codingquokka.bottle.service.MailService;
 import com.codingquokka.bottle.service.UserService;
+import com.codingquokka.bottle.vo.UserVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,12 +39,12 @@ public class UserController {
 
     @PostMapping("/changePassword")
     public ResponseEntity<Object> changePassword(@RequestParam HashMap<String, Object> params, HttpServletRequest request) throws Exception {
-        Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
+        UserVO authorizedUserVO = (UserVO) request.getAttribute("authorizedUserVO");
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("auth", request.getAttribute("auth"));
 
-        params.put("EMAIL", authMap.get("EMAIL"));
-        params.put("UUID", authMap.get("UUID"));
+        params.put("EMAIL", authorizedUserVO.getEmail());
+        params.put("UUID", authorizedUserVO.getUuid());
         if (userService.changePassword(params) > 0) {
             responseData.put("status", "success");
             responseData.put("message", "비밀번호 변경에 성공하였습니다.\n안정적 서비스 이용을 위해 다시 로그인해 주세요");
@@ -60,20 +58,11 @@ public class UserController {
 
     @GetMapping("/getUserInfo")
     public ResponseEntity<String> getUserInfo(@RequestParam HashMap<String, Object> params, HttpServletRequest request) throws Exception {
-
-        Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
-        for (String s : authMap.keySet()) {
-            System.out.println("s + \" = \" + authMap.get(s) = " + s + " = " + authMap.get(s));
-        }
-
-//        윤규야 여기 수정좀 할게. return type 이 없어서 select 부문 에러났음.
-        Map<String,Object> result = userService.getUserInfo(authMap);
-
+        UserVO authorizedUserVO = (UserVO) request.getAttribute("authorizedUserVO");
         Map<String, Object> responseData = new HashMap<>();
-        System.out.println("authMap = " + authMap);
         responseData.put("auth", request.getAttribute("auth"));
         responseData.put("status", "success");
-        responseData.put("message",result);
+        responseData.put("message", objectMapper.writeValueAsString(userService.getUserInfo(authorizedUserVO.getEmail())));
 
         return ResponseEntity.ok(objectMapper.writeValueAsString(responseData));
     }

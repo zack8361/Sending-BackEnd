@@ -6,26 +6,26 @@
 
 
 <mapper namespace="mapper.bottleMapper">
-    <select id="getReceivedBottles" parameterType="map" resultType="map">
+    <select id="getReceivedBottles" parameterType="String" resultType="map">
         SELECT
             LETTER_ID,
             TITLE,
             SEND_DT,
             IS_READ
         FROM bottle_letter
-        WHERE RECEIVER_ID = #{EMAIL}
+        WHERE RECEIVER_ID = #{email}
           AND IS_USING = 1
           AND IS_REPORTED_MSG = 'N';
     </select>
 
-    <select id="getSentBottles" parameterType="map" resultType="map">
+    <select id="getSentBottles" parameterType="String" resultType="map">
         SELECT
             LETTER_ID,
             TITLE,
             SEND_DT,
             IS_READ
         FROM bottle_letter
-        WHERE SENDER_ID = #{EMAIL}
+        WHERE SENDER_ID = #{email}
           AND IS_USING = 1
     </select>
 
@@ -39,7 +39,7 @@
             IS_REPORTED_MSG
         FROM bottle_letter
         WHERE LETTER_ID = #{letterId}
-          AND (SENDER_ID = #{EMAIL} OR RECEIVER_ID = #{EMAIL})
+          AND (SENDER_ID = #{email} OR RECEIVER_ID = #{email})
           AND IS_USING = 1
     </select>
 
@@ -87,7 +87,7 @@
         UPDATE bottle_letter
         SET IS_REPORTED_MSG = 'Y'
         WHERE LETTER_ID = #{letterId}
-          AND (SENDER_ID = #{EMAIL} OR RECEIVER_ID = #{EMAIL})
+          AND (SENDER_ID = #{email} OR RECEIVER_ID = #{email})
           AND IS_USING = 1
     </update>
 
@@ -95,7 +95,7 @@
         UPDATE bottle_letter
         SET IS_READ = 'Y'
         WHERE LETTER_ID = #{letterId}
-          AND (SENDER_ID = #{EMAIL} OR RECEIVER_ID = #{EMAIL})
+          AND (SENDER_ID = #{email} OR RECEIVER_ID = #{email})
           AND IS_USING = 1
     </update>
 </mapper>

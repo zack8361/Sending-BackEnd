@@ -2,8 +2,7 @@ package com.codingquokka.bottle.intercepter;
 
 import com.codingquokka.bottle.core.AES128;
 import com.codingquokka.bottle.dao.UserDao;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import com.codingquokka.bottle.vo.UserVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -17,7 +16,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,20 +38,20 @@ public class AuthInterceptor {
             "execution(* com.codingquokka.bottle.controller.ChatController.*(..))" )
     public Object interceptAuth(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        Map<String, Object> authMap;
+        UserVO userVO;
         try {
-            authMap = objectMapper.readValue(aes128.decrypt(request.getParameter("auth"), "login"), Map.class);
+            userVO = objectMapper.readValue(aes128.decrypt(request.getParameter("auth"), "login"), UserVO.class);
             now = LocalDateTime.now();
-            LocalDateTime lastRequest = LocalDateTime.parse(authMap.get("LAST_REQUEST").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+            LocalDateTime lastRequest = LocalDateTime.parse(userVO.getLastRequest(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
 
-            if (now.isAfter(lastRequest.plusMinutes(30)) || userDao.checkUser(authMap) < 1) {
+            if (now.isAfter(lastRequest.plusMinutes(30)) || userDao.checkUser(userVO) < 1) {
                 throw new Exception();
             }
 
-            authMap.put("LAST_REQUEST", now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
-            request.setAttribute("auth",aes128.encrypt(objectMapper.writeValueAsString(authMap), "login"));
-            request.setAttribute("authMap", authMap);
-            System.out.println(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")) + " - " + request.getRequestURI() + " auth : " + authMap);
+            userVO.setLastRequest(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
+            request.setAttribute("auth",aes128.encrypt(objectMapper.writeValueAsString(userVO), "login"));
+            request.setAttribute("authorizedUserVO", userVO);
+            System.out.println(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")) + " - " + request.getRequestURI() + " auth : " + userVO);
 
         } catch (Exception e) {
             Map<String, Object> result = new HashMap<>();

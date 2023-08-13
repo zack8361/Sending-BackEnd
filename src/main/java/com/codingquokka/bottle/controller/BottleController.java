@@ -5,7 +5,9 @@ import com.codingquokka.bottle.service.BottleService;
 import com.codingquokka.bottle.service.FcmTokenService;
 import com.codingquokka.bottle.service.FirebaseCloudMessageService;
 import com.codingquokka.bottle.service.MailService;
+import com.codingquokka.bottle.vo.BottleLetterVO;
 import com.codingquokka.bottle.vo.FcmTokenVO;
+import com.codingquokka.bottle.vo.UserVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,11 +50,11 @@ public class BottleController {
 
     @GetMapping("/getReceivedBottles")
     public ResponseEntity<String> getReceivedBottles(@RequestParam HashMap<String, Object> param, HttpServletRequest request) throws Exception {
-        Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
+        UserVO authorizedUserVO = (UserVO) request.getAttribute("authorizedUserVO");
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("auth", request.getAttribute("auth"));
 
-        List<Map<String, Object>> result = bottleService.getReceivedBottles(authMap);
+        List<BottleLetterVO> result = bottleService.getReceivedBottles(authorizedUserVO.getEmail());
 
         if (result != null) {
             responseData.put("status", "success");
@@ -69,11 +71,11 @@ public class BottleController {
     //    내가 받은 이메일 내용 , 제목 , 보낸 시간 뽑기.
     @GetMapping("/getSentBottles")
     public ResponseEntity<String> getSentBottles(@RequestParam HashMap<String, Object> param, HttpServletRequest request) throws Exception {
-        Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
+        UserVO authorizedUserVO = (UserVO) request.getAttribute("authorizedUserVO");
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("auth", request.getAttribute("auth"));
 
-        List<Map<String, Object>> result = bottleService.getSentBottles(authMap);
+        List<BottleLetterVO> result = bottleService.getSentBottles(authorizedUserVO.getEmail());
 
         if (result != null) {
             responseData.put("status", "success");
@@ -89,12 +91,12 @@ public class BottleController {
 
     @GetMapping("/getBottleDetail")
     public ResponseEntity<String> getBottleDetail(@RequestParam HashMap<String, Object> param, HttpServletRequest request) throws Exception {
-        Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
+        UserVO authorizedUserVO = (UserVO) request.getAttribute("authorizedUserVO");
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("auth", request.getAttribute("auth"));
 
-        param.put("EMAIL",authMap.get("EMAIL").toString());
-        Map<String, Object> result = bottleService.getBottleDetail(param);
+        param.put("email", authorizedUserVO.getEmail());
+        BottleLetterVO result = bottleService.getBottleDetail(param);
 
         if (result != null) {
             responseData.put("status", "success");
@@ -110,11 +112,11 @@ public class BottleController {
 
     @PostMapping("/reportBottleLetter")
     public ResponseEntity<String> reportBottleLetter(@RequestParam HashMap<String, Object> param, HttpServletRequest request) throws Exception {
-        Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
+        UserVO authorizedUserVO = (UserVO) request.getAttribute("authorizedUserVO");
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("auth", request.getAttribute("auth"));
 
-        param.put("EMAIL",authMap.get("EMAIL").toString());
+        param.put("email", authorizedUserVO.getEmail());
         int result = bottleService.reportBottleLetter(param);
 
         if (result == 1) {
@@ -131,11 +133,11 @@ public class BottleController {
 
     @PostMapping("/sendBottleLetter")
     public ResponseEntity<String> sendBottleLetter(@RequestParam HashMap<String, Object> param, HttpServletRequest request) throws Exception {
-        Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
+        UserVO authorizedUserVO = (UserVO) request.getAttribute("authorizedUserVO");
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("auth", request.getAttribute("auth"));
 
-        param.put("sender_id", authMap.get("EMAIL"));
+        param.put("email", authorizedUserVO.getEmail());
 
         int result = bottleService.sendBottleLetter(param);
 
