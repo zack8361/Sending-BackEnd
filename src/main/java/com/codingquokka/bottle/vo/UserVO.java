@@ -1,26 +1,23 @@
 package com.codingquokka.bottle.vo;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 
 @Getter
 @Setter
-@Builder
 @ToString
+@NoArgsConstructor
 public class UserVO {
     private String email;
     private String password;
     private int certified;
+    private String uuid;
     private int cntReceived;
     private int cntSent;
     private String joinDt;
     private int dDay;
     private String restrictionDt;
     private String belong;
-    private String uuid;
     private int isUsing;
     private String lastRequest;
 }

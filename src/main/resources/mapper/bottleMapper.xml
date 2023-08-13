@@ -6,7 +6,7 @@
 
 
 <mapper namespace="mapper.bottleMapper">
-    <select id="getReceivedBottles" parameterType="String" resultType="map">
+    <select id="getReceivedBottles" parameterType="String" resultType="com.codingquokka.bottle.vo.BottleLetterVO">
         SELECT
             LETTER_ID,
             TITLE,
@@ -18,7 +18,7 @@
           AND IS_REPORTED_MSG = 'N';
     </select>
 
-    <select id="getSentBottles" parameterType="String" resultType="map">
+    <select id="getSentBottles" parameterType="String" resultType="com.codingquokka.bottle.vo.BottleLetterVO">
         SELECT
             LETTER_ID,
             TITLE,
@@ -29,7 +29,7 @@
           AND IS_USING = 1
     </select>
 
-    <select id="getBottleDetail" parameterType="map" resultType="map">
+    <select id="getBottleDetail" parameterType="map" resultType="com.codingquokka.bottle.vo.BottleLetterVO">
         SELECT
             LETTER_ID,
             TITLE,
@@ -39,7 +39,6 @@
             IS_REPORTED_MSG
         FROM bottle_letter
         WHERE LETTER_ID = #{letterId}
-          AND (SENDER_ID = #{email} OR RECEIVER_ID = #{email})
           AND IS_USING = 1
     </select>
 

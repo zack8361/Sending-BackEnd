@@ -11,8 +11,8 @@
 		SELECT
 		     EMAIL as email,
 		     BELONG as belong,
-		     UUID as uuid,
-			 CERTIFIED as certified
+			 CERTIFIED as certified,
+			 UUID as uuid
 		FROM
 		    user
 		WHERE
@@ -76,7 +76,7 @@
 			IS_USING = 1
 	</update>
 
-	<select id="checkUser" parameterType="com.codingquokka.bottle.vo.UserVO" resultType="com.codingquokka.bottle.vo.UserVO">
+	<select id="checkUser" parameterType="com.codingquokka.bottle.vo.UserVO" resultType="int">
 		SELECT
 			COUNT(*)
 		FROM
@@ -86,7 +86,7 @@
 		  	AND
 		    uuid = #{uuid}
 		  	AND
-		    is_certified = 'Y'
+		    certified = 1
 		  AND
 			IS_USING = 1
 	</select>

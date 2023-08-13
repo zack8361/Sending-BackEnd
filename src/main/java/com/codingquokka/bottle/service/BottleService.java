@@ -33,8 +33,9 @@ public class BottleService {
 
         BottleLetterVO bottle = bottleLetterDao.getBottleDetail(param);
         if (bottle.getIsReportedMsg().equals("Y")) {
-            BottleLetterVO reportedBottle = BottleLetterVO.builder().isReportedMsg("Y").build();
-
+            BottleLetterVO reportedBottle = new BottleLetterVO() {{
+                setIsReportedMsg("Y");
+            }};
             return reportedBottle;
         }
         else {
