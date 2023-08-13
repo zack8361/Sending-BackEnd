@@ -104,7 +104,7 @@
 			IS_USING = 1
 	</update>
 
-	<select id="getUserInfo" parameterType="map">
+	<select id="getUserInfo" parameterType="map" resultType="map">
 		SELECT
 		    EMAIL,
 			CNT_RECEIVED,
@@ -113,8 +113,8 @@
 			 	FROM bottle_letter
 			 	WHERE sender_id = #{EMAIL}
 			) as CNT_SENT,
-			DATEDIFF(now(), date(JOIN_DT) as DDAY
-				) as DDAY
+			DATEDIFF(now(), date(JOIN_DT)) as DDAY,
+			JOIN_DT
 		FROM user
 		WHERE EMAIL = #{EMAIL}
 			AND

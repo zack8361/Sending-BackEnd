@@ -60,11 +60,20 @@ public class UserController {
 
     @GetMapping("/getUserInfo")
     public ResponseEntity<String> getUserInfo(@RequestParam HashMap<String, Object> params, HttpServletRequest request) throws Exception {
+
         Map<String, Object> authMap = (Map<String, Object>) request.getAttribute("authMap");
+        for (String s : authMap.keySet()) {
+            System.out.println("s + \" = \" + authMap.get(s) = " + s + " = " + authMap.get(s));
+        }
+
+//        윤규야 여기 수정좀 할게. return type 이 없어서 select 부문 에러났음.
+        Map<String,Object> result = userService.getUserInfo(authMap);
+
         Map<String, Object> responseData = new HashMap<>();
+        System.out.println("authMap = " + authMap);
         responseData.put("auth", request.getAttribute("auth"));
         responseData.put("status", "success");
-        responseData.put("message", userService.getUserInfo(authMap));
+        responseData.put("message",result);
 
         return ResponseEntity.ok(objectMapper.writeValueAsString(responseData));
     }
