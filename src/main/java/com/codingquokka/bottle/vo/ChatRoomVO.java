@@ -11,5 +11,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ChatRoomVO {
-
+    private String chatId;
+    private String userId;
+    private int isUsing;
 }
