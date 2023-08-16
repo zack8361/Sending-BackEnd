@@ -13,7 +13,6 @@ public class UserVO {
     private int certified;
     private String uuid;
     private int cntReceived;
-    private int CNT_RECEIVED;
     private int cntSent;
     private String joinDt;
     private int dDay;
