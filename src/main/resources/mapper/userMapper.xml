@@ -106,14 +106,15 @@
 
 	<select id="getUserInfo" parameterType="String" resultType="com.codingquokka.bottle.vo.UserVO">
 		SELECT
-		    EMAIL as email,
-			CNT_RECEIVED as cntReceived,
+		    EMAIL,
+			CNT_RECEIVED,
 			(
 				SELECT count(sender_id)
 			 	FROM bottle_letter
 			 	WHERE sender_id = #{email}
-			) as cntSent,
-			DATEDIFF(now(), date(JOIN_DT)) as dDay
+			) as CNT_SENT,
+			DATEDIFF(now(), date(JOIN_DT)) as DDAY,
+			JOIN_DT
 		FROM user
 		WHERE EMAIL = #{email}
 			AND
