@@ -39,6 +39,9 @@ public class AuthInterceptor {
     public Object interceptAuth(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         UserVO userVO;
+
+        Map<String, Object> result = new HashMap<>();
+        Object resultProceed = null;
         try {
             userVO = objectMapper.readValue(aes128.decrypt(request.getParameter("auth"), "login"), UserVO.class);
             now = LocalDateTime.now();
@@ -54,15 +57,20 @@ public class AuthInterceptor {
             System.out.println(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")) + " - " + request.getRequestURI() + " auth : " + userVO);
 
         } catch (Exception e) {
-            Map<String, Object> result = new HashMap<>();
-            result.put("status", "fail");
+            result.put("status", "unauthorized");
             result.put("message", "유효하지 않은 인증정보 입니다.");
 
             return ResponseEntity.ok(objectMapper.writeValueAsString(result));
         }
-        Object result = joinPoint.proceed();
 
-        return result;
+        try {
+            resultProceed = joinPoint.proceed();
+        } catch (Exception e) {
+            result.put("status", "fail");
+            result.put("message", "오류가 발생하였습니다.");
+            System.out.println(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")) + " - " + request.getRequestURI() + " error : " + e.getStackTrace());
+        }
+        return resultProceed;
     }
 
 

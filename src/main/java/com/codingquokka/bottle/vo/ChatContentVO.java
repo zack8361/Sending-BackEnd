@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ChatContentVO {
-    private String chatId;
+    private String chatRoomUuid;
     private String userId;
     private String content;
     private String sendDt;

@@ -19,4 +19,8 @@ public class ChatContentDao {
     public List<ChatContentVO> getChatContentList(String chatId) {
         return sqlSession.selectList(namepace + ".getChatContentList", chatId);
     }
+
+    public int insertChatContent(ChatContentVO chatContentVO) {
+        return sqlSession.insert(namepace + ".insertChatContent", chatContentVO);
+    }
 }

@@ -10,5 +10,14 @@
         values (#{chatId}, #{userId}, 1)
     </select>
 
+    <select id="getUserId" parameterType="map" resultType="String">
+        select USER_ID
+        from chat_room
+        where
+            CHAT_ROOM_UUID = #{chatRoomUuid}
+            and
+            USER_ID != #{userId}
+    </select>
+
 
 </mapper>

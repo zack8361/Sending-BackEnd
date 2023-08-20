@@ -5,8 +5,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.chatContentMapper">
-    <select id="insertChat" parameterType="com.codingquokka.bottle.vo.ChatContentVO">
-
+    <select id="insertChatContent" parameterType="com.codingquokka.bottle.vo.ChatContentVO">
+        insert into chat_content (
+            CHAT_ROOM_UUID,
+            USER_ID,
+            CONTENT,
+            SEND_DTT,
+            IS_USING
+        )
+        values (
+            #{chatContentUuid},
+            #{userId},
+            #{content},
+            NOW(),
+            1
+        )
     </select>
 
 
