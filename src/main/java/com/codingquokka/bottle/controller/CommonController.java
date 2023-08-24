@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+
 @Controller
 public class CommonController {
 
@@ -74,9 +75,9 @@ public class CommonController {
         String[] email = map.get("email").toString().split("@");
         map.put("belong", email[1]);
         map.put("domain_cd", email[1]);
-
 //      회원 가입 로직
         int result = userService.join(map);
+
 
 //      회원 가입 성공시 토큰 -> fcm table 에 insert
         if (result == 1) {

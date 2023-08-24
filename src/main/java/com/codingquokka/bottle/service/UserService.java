@@ -24,6 +24,7 @@ public class UserService {
     @Autowired
     private MailDomainService mailDomainService;
 
+
     public UserVO login(Map<String, Object> map){
         return userDao.login(map);
     }

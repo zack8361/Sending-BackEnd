@@ -14,7 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +44,25 @@ public class UserController {
     @Autowired
     private MailService mailService;
 
+
+
+    @GetMapping("/emailCheckToChangePassword")
+    public ResponseEntity<Object> emailCheck(@RequestParam HashMap<String,Object> params, HttpServletRequest request) throws Exception {
+//      1. 복호화 작업.
+        params.put("email", aes128.decrypt((String) params.get("email"), "common"));
+//      2.auth 작업
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("auth", request.getAttribute("auth"));
+//      3.메일 보내기
+        try {
+            mailService.sendMail(params.get("email").toString(), "[BottleProject] 테스트 메일(여기 암호화 된 인증 번호)", "cert_Mail", "");
+            System.out.println("성공 잘함");
+        }
+        catch (Exception e){
+            System.out.println("여기 탔음");
+        }
+        return null;
+    }
     @PostMapping("/changePassword")
     public ResponseEntity<Object> changePassword(@RequestParam HashMap<String, Object> params, HttpServletRequest request) throws Exception {
         UserVO authorizedUserVO = (UserVO) request.getAttribute("authorizedUserVO");
