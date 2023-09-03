@@ -44,6 +44,18 @@ public class TestController {
     private AES128 aes128;
 
 
+
+    @GetMapping("/kongTesting")
+    public ResponseEntity<Object> getKongTesting() {
+        System.out.println("hi");
+
+        HashMap<String,String> map2 = new HashMap<>();
+        map2.put("status","200");
+
+        return ResponseEntity.ok(map2);
+    }
+
+
     @PostMapping("/apiTest")
     public ResponseEntity<Object> getApiTest(@RequestBody HashMap<String, Object> map){
         System.out.println("map = " + map);
@@ -57,15 +69,6 @@ public class TestController {
         System.out.println("여기에 접근했다 lsiting");
         ArrayList<String> list = new ArrayList<>();
         list.add("kong");
-        list.add("kong");
-        list.add("kong");
-        list.add("kong");
-        list.add("kong");
-        list.add("kong");
-        list.add("kong");
-        list.add("kong");
-        list.add("kong");
-
 
         return ResponseEntity.ok(om.writeValueAsString(list));
     }
